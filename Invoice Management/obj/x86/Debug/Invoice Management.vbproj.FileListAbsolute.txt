@@ -1,0 +1,52 @@
+C:\Users\Craig\documents\visual studio 2010\Projects\Invoice Management\Invoice Management\bin\Debug\Invoice Management.exe
+C:\Users\Craig\documents\visual studio 2010\Projects\Invoice Management\Invoice Management\bin\Debug\Invoice Management.pdb
+C:\Users\Craig\documents\visual studio 2010\Projects\Invoice Management\Invoice Management\bin\Debug\Invoice Management.xml
+C:\Users\Craig\documents\visual studio 2010\Projects\Invoice Management\Invoice Management\obj\x86\Debug\Invoice_Management.CreateInvoice.resources
+C:\Users\Craig\documents\visual studio 2010\Projects\Invoice Management\Invoice Management\obj\x86\Debug\Invoice_Management.Main.resources
+C:\Users\Craig\documents\visual studio 2010\Projects\Invoice Management\Invoice Management\obj\x86\Debug\Invoice_Management.Resources.resources
+C:\Users\Craig\documents\visual studio 2010\Projects\Invoice Management\Invoice Management\obj\x86\Debug\Invoice Management.vbproj.GenerateResource.Cache
+C:\Users\Craig\documents\visual studio 2010\Projects\Invoice Management\Invoice Management\obj\x86\Debug\Invoice Management.exe
+C:\Users\Craig\documents\visual studio 2010\Projects\Invoice Management\Invoice Management\obj\x86\Debug\Invoice Management.xml
+C:\Users\Craig\documents\visual studio 2010\Projects\Invoice Management\Invoice Management\obj\x86\Debug\Invoice Management.pdb
+C:\Users\Craig\documents\visual studio 2010\Projects\Invoice Management\Invoice Management\obj\x86\Debug\Invoice Management.vbprojResolveAssemblyReference.cache
+C:\Users\Craig\Documents\Visual Studio 2010\Projects\Invoice Management\Invoice Management\bin\Debug\AxInterop.AcroPDFLib.dll
+C:\Users\Craig\documents\visual studio 2010\Projects\Invoice Management\Invoice Management\obj\x86\Debug\Invoice_Management.ViewInvoice.resources
+G:\Assessment\Invoice Management\Invoice Management\obj\x86\Debug\Invoice Management.exe
+G:\Assessment\Invoice Management\Invoice Management\obj\x86\Debug\Invoice Management.xml
+G:\Assessment\Invoice Management\Invoice Management\obj\x86\Debug\Invoice Management.pdb
+G:\Assessment\Invoice Management\Invoice Management\obj\x86\Debug\Invoice Management.vbprojResolveAssemblyReference.cache
+G:\Assessment\Invoice Management\Invoice Management\obj\x86\Debug\Invoice_Management.CreateInvoice.resources
+G:\Assessment\Invoice Management\Invoice Management\obj\x86\Debug\Invoice_Management.Main.resources
+G:\Assessment\Invoice Management\Invoice Management\obj\x86\Debug\Invoice_Management.Resources.resources
+G:\Assessment\Invoice Management\Invoice Management\obj\x86\Debug\Invoice_Management.ViewInvoice.resources
+G:\Assessment\Invoice Management\Invoice Management\obj\x86\Debug\Invoice Management.vbproj.GenerateResource.Cache
+G:\Assessment\Invoice Management\Invoice Management\bin\Debug\Invoice Management.exe
+G:\Assessment\Invoice Management\Invoice Management\bin\Debug\Invoice Management.pdb
+G:\Assessment\Invoice Management\Invoice Management\bin\Debug\Invoice Management.xml
+G:\Assessment\Invoice Management\Invoice Management\bin\Debug\AxInterop.AcroPDFLib.dll
+G:\Assessment\Invoice Management\Invoice Management\bin\Debug\PdfSharp.dll
+G:\Assessment\Invoice Management\Invoice Management\bin\Debug\de\PdfSharp.resources.dll
+H:\Assessment\Invoice Management\Invoice Management\obj\x86\Debug\Invoice Management.exe
+H:\Assessment\Invoice Management\Invoice Management\obj\x86\Debug\Invoice Management.xml
+H:\Assessment\Invoice Management\Invoice Management\obj\x86\Debug\Invoice Management.pdb
+H:\Assessment\Invoice Management\Invoice Management\bin\Debug\Invoice Management.exe
+H:\Assessment\Invoice Management\Invoice Management\bin\Debug\Invoice Management.pdb
+H:\Assessment\Invoice Management\Invoice Management\bin\Debug\Invoice Management.xml
+H:\Assessment\Invoice Management\Invoice Management\bin\Debug\AxInterop.AcroPDFLib.dll
+H:\Assessment\Invoice Management\Invoice Management\bin\Debug\PdfSharp.dll
+H:\Assessment\Invoice Management\Invoice Management\bin\Debug\de\PdfSharp.resources.dll
+H:\Assessment\Invoice Management\Invoice Management\obj\x86\Debug\Invoice Management.vbprojResolveAssemblyReference.cache
+H:\Assessment\Invoice Management\Invoice Management\obj\x86\Debug\Invoice_Management.CreateInvoice.resources
+H:\Assessment\Invoice Management\Invoice Management\obj\x86\Debug\Invoice_Management.Main.resources
+H:\Assessment\Invoice Management\Invoice Management\obj\x86\Debug\Invoice_Management.Resources.resources
+H:\Assessment\Invoice Management\Invoice Management\obj\x86\Debug\Invoice_Management.PreviewInvoice.resources
+H:\Assessment\Invoice Management\Invoice Management\obj\x86\Debug\Invoice_Management.ViewInvoice.resources
+H:\Assessment\Invoice Management\Invoice Management\obj\x86\Debug\Invoice Management.vbproj.GenerateResource.Cache
+G:\Assessment\Invoice Management\Invoice Management\obj\x86\Debug\Invoice_Management.PreviewInvoice.resources
+G:\Assessment\Invoice Management\Invoice Management\obj\x86\Debug\Interop.Acrobat.dll
+G:\Assessment\Invoice Management\Invoice Management\obj\x86\Debug\Invoice Management.vbproj.ResolveComReference.cache
+G:\Assessment\Invoice Management\Invoice Management\obj\x86\Debug\Interop.AcroBrokerLib.dll
+H:\Assessment\Invoice Management\Invoice Management\obj\x86\Debug\Interop.Acrobat.dll
+H:\Assessment\Invoice Management\Invoice Management\obj\x86\Debug\Interop.AcroBrokerLib.dll
+H:\Assessment\Invoice Management\Invoice Management\obj\x86\Debug\Invoice Management.vbproj.ResolveComReference.cache
+H:\Assessment\Invoice Management\Invoice Management\obj\x86\Debug\Invoice_Management.Options.resources
