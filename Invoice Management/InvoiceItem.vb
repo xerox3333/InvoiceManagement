@@ -10,6 +10,12 @@ Public Class InvoiceItem
     Private unitPrice As String
     Private Price As String
 
+    Public Sub New()
+
+
+
+    End Sub
+
     Public Property pItem As String
 
         Get
@@ -64,23 +70,5 @@ Public Class InvoiceItem
         End Set
 
     End Property
-
-    Public Sub New()
-
-
-
-    End Sub
-
-    Public Sub AddToItemsArray()
-
-
-
-    End Sub
-
-    Public Sub WriteInvoiceItemsToFile()
-
-
-
-    End Sub
 
 End Class

@@ -1,4 +1,6 @@
-﻿Public Class PreviewInvoice
+﻿Imports Invoice_Management.GlobalVar
+
+Public Class PreviewInvoice
 
     Dim a As New GlobalVar
 
@@ -10,8 +12,8 @@
         Main.SplitContainer1.Panel2.Controls.Add(Me)
         Call Main.DockWindow(Me)
 
-        Dim FileLocation As String = a.previewFileLocation
-        Dim FileName As String = a.previewFileName
+        Dim FileLocation As String = previewFileLocation
+        Dim FileName As String = previewFileName
 
         If CreateInvoice.IsHandleCreated = True Then
 

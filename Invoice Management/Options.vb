@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿Imports Invoice_Management.GlobalVar
+Imports System.IO
 
 Public Class Options
 
@@ -206,17 +207,17 @@ Public Class Options
 
         If ValidateFormData() Then
 
-            a.OwnerName = txtOwnerName.Text
-            a.CompanyName = txtCompanyName.Text
-            a.CompanyAddress1 = txtStreetAddress.Text
-            a.CompanyAddress2 = txtStreetAddress2.Text
-            a.CompanyCity = txtCity.Text
-            a.CompanyPostcode = txtPostcode.Text
-            a.CompanyPhone = txtPhone.Text
-            a.CompanyMobile = txtMobile.Text
-            a.CompanyEmail = txtEmail.Text
-            a.Website = txtWebsite.Text
-            a.Description = txtDescription.Text
+            oOwnerName = txtOwnerName.Text
+            oCompanyName = txtCompanyName.Text
+            oCompanyAddress1 = txtStreetAddress.Text
+            oCompanyAddress2 = txtStreetAddress2.Text
+            oCompanyCity = txtCity.Text
+            oCompanyPostcode = txtPostcode.Text
+            oCompanyPhone = txtPhone.Text
+            oCompanyMobile = txtMobile.Text
+            oCompanyEmail = txtEmail.Text
+            oWebsite = txtWebsite.Text
+            oDescription = txtDescription.Text
 
         End If
 
@@ -224,28 +225,28 @@ Public Class Options
 
     Private Sub WriteDetailsToFile()
 
-        Dim FileLocation = "C:\Users\" & a.getUserName() & "\Documents\InvoiceManager\Preferences\Preferences.txt"
+        Dim FileLocation = "C:\Users\" & getUserName() & "\Documents\InvoiceManager\Preferences\Preferences.txt"
 
         If System.IO.File.Exists(FileLocation) = False Then
 
-            MkDir("C:\Users\" & a.getUserName() & "\Documents\InvoiceManager\Preferences")
+            MkDir("C:\Users\" & getUserName() & "\Documents\InvoiceManager\Preferences")
             File.Create(FileLocation & "\" & "Preferences.txt").Dispose()
 
         End If
 
         Dim SW As New System.IO.StreamWriter(FileLocation, False)
 
-        SW.WriteLine(a.OwnerName)
-        SW.WriteLine(a.CompanyName)
-        SW.WriteLine(a.CompanyAddress1)
-        SW.WriteLine(a.CompanyAddress2)
-        SW.WriteLine(a.CompanyCity)
-        SW.WriteLine(a.CompanyPostcode)
-        SW.WriteLine(a.CompanyPhone)
-        SW.WriteLine(a.CompanyMobile)
-        SW.WriteLine(a.CompanyEmail)
-        SW.WriteLine(a.Website)
-        SW.WriteLine(a.Description)
+        SW.WriteLine(oOwnerName)
+        SW.WriteLine(oCompanyName)
+        SW.WriteLine(oCompanyAddress1)
+        SW.WriteLine(oCompanyAddress2)
+        SW.WriteLine(oCompanyCity)
+        SW.WriteLine(oCompanyPostcode)
+        SW.WriteLine(oCompanyPhone)
+        SW.WriteLine(oCompanyMobile)
+        SW.WriteLine(oCompanyEmail)
+        SW.WriteLine(oWebsite)
+        SW.WriteLine(oDescription)
 
         SW.Close()
 

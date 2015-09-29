@@ -1,20 +1,20 @@
 ﻿Public Class GlobalVar
 
-    Public Shared INVOICE_FILE As String = ("C:\Users\" & getUserName() & "\Documents\InvoiceManager\Data\InvoiceRecords.txt")
+    Public Shared invoicePath As String = ("C:\Users\" & getUserName() & "\Documents\InvoiceManager\Data")
     Public Shared previewFileLocation As String = ("C:\temp")
     Public Shared previewFileName As String = ("preview.pdf")
 
-    Public Shared OwnerName As String = ""
-    Public Shared CompanyName As String = "Company Name"
-    Public Shared CompanyAddress1 As String = "Company Address1"
-    Public Shared CompanyAddress2 As String = "Comany Address2"
-    Public Shared CompanyCity As String = "Town/City"
-    Public Shared CompanyPostcode As String = "Postcode"
-    Public Shared CompanyPhone As String = "Phone"
-    Public Shared CompanyMobile As String = "Mobile"
-    Public Shared CompanyEmail As String = "Email"
-    Public Shared Website As String = "Website"
-    Public Shared Description As String = "Description"
+    Public Shared oOwnerName As String = ""
+    Public Shared oCompanyName As String = "Company Name"
+    Public Shared oCompanyAddress1 As String = "Company Address1"
+    Public Shared oCompanyAddress2 As String = "Comany Address2"
+    Public Shared oCompanyCity As String = "Town/City"
+    Public Shared oCompanyPostcode As String = "Postcode"
+    Public Shared oCompanyPhone As String = "Phone"
+    Public Shared oCompanyMobile As String = "Mobile"
+    Public Shared oCompanyEmail As String = "Email"
+    Public Shared oWebsite As String = "Website"
+    Public Shared oDescription As String = "Description"
 
     Public Shared Function getUserName() As String
 

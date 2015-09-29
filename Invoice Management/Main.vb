@@ -1,5 +1,7 @@
 ﻿Option Explicit On
 
+Imports Invoice_Management.GlobalVar
+
 Public Class Main
 
     Private Sub Main_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
@@ -58,7 +60,7 @@ Public Class Main
         pdf1.drawInvoiceHeader("Bobs Company", "27 Strathburn Gardens", "Inverurie", "Aberdeenshire", "AB51 0NF", "01467671554", "07841377715", "bob@company.com")
         pdf1.SavePDF("C:\Users\Craig\Desktop", "PDF1_Test.pdf")
 
-        i.WriteInvoiceToFile("C:\Users\Craig\Desktop\test.bin")
+        CreateInvoice.writeInvoiceToFile(i, invoicePath & "\", "TestFile1")
 
         i.readInvoiceFromFile(invoiceList, "C:\Users\Craig\Desktop\test.bin")
 

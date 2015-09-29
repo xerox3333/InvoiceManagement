@@ -7,6 +7,7 @@
 Public Class Invoice
 
     Private invoiceItems As List(Of InvoiceItem)
+
     Private invoiceNo, invoiceDate As String
     Private estimateNo, estimateDate As String
     Private purchaseNo As String
@@ -16,16 +17,23 @@ Public Class Invoice
     Private terms As String
     Private termsLength As Integer
 
-    Public Property pAddInvoiceItem As InvoiceItem
+    'Constructor
+    Public Sub New()
 
-        Get
-            Return invoiceItems(0)
-        End Get
-        Set(ByVal value As InvoiceItem)
-            invoiceItems.Add(value)
-        End Set
 
-    End Property
+
+    End Sub
+
+    'Public Property pAddInvoiceItem As InvoiceItem
+
+    '    Get
+    '        Return invoiceItems(0)
+    '    End Get
+    '    Set(ByVal value As InvoiceItem)
+    '        invoiceItems.Add(value)
+    '    End Set
+
+    'End Property
 
     Public Property pInvoiceNo As String
 
@@ -191,31 +199,6 @@ Public Class Invoice
         Return info
 
     End Function
-
-    'Constructor
-    Public Sub New()
-
-
-
-    End Sub
-
-
-    Public Sub writeInvoiceToFile(ByVal Location As String)
-
-        Dim fs As FileStream = New FileStream(Location, FileMode.OpenOrCreate)
-        Dim bw As New BinaryWriter(fs)
-
-        'Loop through all the properties in Invoice Class and output to Binary File
-        For Each _property In GetType(Invoice).GetProperties()
-
-            bw.Write(_property.Name)
-
-        Next
-
-        fs.Close()
-        bw.Close()
-
-    End Sub
 
     Public Sub readInvoiceFromFile(ByRef InvoiceList As List(Of Invoice), ByVal FileLocation As String)
 

@@ -109,3 +109,5 @@ C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\obj\x86\D
 C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\obj\x86\Debug\Invoice_Management.PreviewInvoice.resources
 C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\obj\x86\Debug\Invoice_Management.ViewInvoice.resources
 C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\obj\x86\Debug\Invoice Management.vbproj.GenerateResource.Cache
+C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\obj\x86\Debug\Interop.Acrobat.dll
+C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\obj\x86\Debug\Interop.AcroBrokerLib.dll

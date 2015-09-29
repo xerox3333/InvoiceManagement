@@ -14,11 +14,10 @@ Imports PdfSharp.Pdf
 Public Class CreateInvoice
 
     'VARIABLES
-    Public num_rows As Integer = 0
+    Private invoiceList As New List(Of Invoice)
     Public num_invoices As Integer = 1
-    'Dim invoice As New Invoice
-    Public invoiceList As New List(Of Invoice)
-    Public invoiceItems As New List(Of InvoiceItem)
+    Public num_rows As Integer
+    Public inv As New Invoice()
 
     Private Sub CreateInvoice_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
@@ -81,24 +80,24 @@ Public Class CreateInvoice
 
     End Sub
 
-    Private Sub getFormData(ByVal invoice As Invoice, ByVal item As InvoiceItem)
+    Private Sub getFormData(ByVal newInvoice As Invoice, ByVal item As InvoiceItem)
 
-        invoice.pInvoiceNo = txtInvoiceNo.Text
-        invoice.pEstimateNo = txtEstimateNo.Text
-        invoice.pPurchaseNo = txtPurchaseNo.Text
-        invoice.pCustomerNo = txtCutomerID.Text
-        invoice.pInvoiceDate = txtDate.Text
-        invoice.pEstimateDate = ""
-        invoice.pPurchaseNo = txtPurchaseNo.Text
-        invoice.pBillingName = txtBillToName.Text
-        invoice.pBillingAddress1 = txtBillToAddress.Text
-        invoice.pBillingAddress2 = ""
-        invoice.pBillingCity = txtBillToCity.Text
-        invoice.pBillingPostcode = txtBillToPostcode.Text
-        invoice.pTerms = cboTerms.Text
-        invoice.pTermsLength = cboTermsLength.Value
+        newInvoice.pInvoiceNo = txtInvoiceNo.Text
+        newInvoice.pEstimateNo = txtEstimateNo.Text
+        newInvoice.pPurchaseNo = txtPurchaseNo.Text
+        newInvoice.pCustomerNo = txtCutomerID.Text
+        newInvoice.pInvoiceDate = txtDate.Text
+        newInvoice.pEstimateDate = ""
+        newInvoice.pPurchaseNo = txtPurchaseNo.Text
+        newInvoice.pBillingName = txtBillToName.Text
+        newInvoice.pBillingAddress1 = txtBillToAddress.Text
+        newInvoice.pBillingAddress2 = ""
+        newInvoice.pBillingCity = txtBillToCity.Text
+        newInvoice.pBillingPostcode = txtBillToPostcode.Text
+        newInvoice.pTerms = cboTerms.Text
+        newInvoice.pTermsLength = cboTermsLength.Value
 
-        invoiceList.Add(invoice) 'Append the new invoice to the invoice list
+        invoiceList.Add(newInvoice) 'Append the new invoice to the invoice list
 
         'For row As Integer = 0 To ItemsGrid.Rows.Count - 1
 
@@ -116,14 +115,21 @@ Public Class CreateInvoice
 
     Private Sub SaveInvoice()
 
+        Dim timeStamp As String
+        Dim d As String = DatePart(DateInterval.Day, Date.Now)
+        Dim m As String = DatePart(DateInterval.Month, Date.Now)
+        Dim y As String = DatePart(DateInterval.Year, Date.Now)
+
+        timeStamp = d & "-" & m & "-" & y
+
         ItemsGrid.EndEdit()
 
         'If checkFormData() = "" Then
 
-        Dim newInvoice As New Invoice
+        Dim newInvoice As New Invoice()
         Dim newInvoiceItem As New InvoiceItem
         Call getFormData(newInvoice, newInvoiceItem) 'Add data to instance of Invoice
-        Call newInvoice.writeInvoiceToFile("C:\Users\Craig\Desktop")
+        Call writeInvoiceToFile(newInvoice, invoicePath, timeStamp & "_Invoice_" & newInvoice.pInvoiceNo)
 
         num_invoices += 1
 
@@ -186,6 +192,24 @@ Public Class CreateInvoice
 
 
         End Try
+
+    End Sub
+
+    Public Sub writeInvoiceToFile(ByVal invoice As Invoice, ByVal Location As String, ByVal FileName As String)
+
+        Dim fs As FileStream = New FileStream(Location & "\" & FileName & ".bin", FileMode.OpenOrCreate)
+        Dim bw As New BinaryWriter(fs)
+
+        'Loop through all the properties in Invoice Class and output to Binary File
+        For Each _property In GetType(Invoice).GetProperties()
+
+            bw.Write(_property.Name)
+            bw.Write(_property.GetValue(invoice, Nothing))
+
+        Next
+
+        fs.Close()
+        bw.Close()
 
     End Sub
 
