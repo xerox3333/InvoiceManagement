@@ -7,8 +7,8 @@ Public Class InvoiceItem
     Private item As String
     Private qty As Single
     Private unit As String
-    Private unitPrice As Single
-    Private Price As Single
+    Private unitPrice As String
+    Private Price As String
 
     Public Property pItem As String
 
@@ -65,7 +65,7 @@ Public Class InvoiceItem
 
     End Property
 
-    Public Sub New(ByRef items() As String)
+    Public Sub New()
 
 
 

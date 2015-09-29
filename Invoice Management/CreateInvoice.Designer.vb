@@ -96,7 +96,7 @@ Partial Class CreateInvoice
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip1.Name = "ToolStrip1"
         Me.ToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.ToolStrip1.Size = New System.Drawing.Size(954, 39)
+        Me.ToolStrip1.Size = New System.Drawing.Size(937, 39)
         Me.ToolStrip1.TabIndex = 0
         Me.ToolStrip1.Text = "CreateInvoiceToolStrip"
         '
@@ -642,8 +642,9 @@ Partial Class CreateInvoice
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoScroll = True
         Me.AutoScrollMargin = New System.Drawing.Size(0, 20)
+        Me.AutoSize = True
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.ClientSize = New System.Drawing.Size(954, 855)
+        Me.ClientSize = New System.Drawing.Size(954, 741)
         Me.Controls.Add(Me.lblTotal)
         Me.Controls.Add(Me.Label19)
         Me.Controls.Add(Me.Label8)
@@ -651,7 +652,6 @@ Partial Class CreateInvoice
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.ItemsGrid)
         Me.Controls.Add(Me.ToolStrip1)
-        Me.MaximizeBox = False
         Me.Name = "CreateInvoice"
         Me.ShowIcon = False
         Me.Text = "Invoice"

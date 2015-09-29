@@ -82,12 +82,9 @@ C:\Users\Craig\Desktop\Invoice Management_01-02-15\Invoice Management\obj\x86\De
 C:\Users\Craig\Desktop\Invoice Management_01-02-15\Invoice Management\obj\x86\Debug\Invoice_Management.PreviewInvoice.resources
 C:\Users\Craig\Desktop\Invoice Management_01-02-15\Invoice Management\obj\x86\Debug\Invoice_Management.ViewInvoice.resources
 C:\Users\Craig\Desktop\Invoice Management_01-02-15\Invoice Management\obj\x86\Debug\Invoice Management.vbproj.GenerateResource.Cache
-D:\Invoice Management_01-02-15\Invoice Management\bin\Debug\Invoice Management.exe.config
-D:\Invoice Management_01-02-15\Invoice Management\obj\x86\Debug\Invoice Management.vbproj.ResolveComReference.cache
-D:\Invoice Management_01-02-15\Invoice Management\obj\x86\Debug\Invoice Management.exe
-D:\Invoice Management_01-02-15\Invoice Management\obj\x86\Debug\Invoice Management.xml
-D:\Invoice Management_01-02-15\Invoice Management\obj\x86\Debug\Invoice Management.pdb
 C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\bin\Debug\Invoice Management.exe.config
+C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\obj\x86\Debug\Interop.Acrobat.dll
+C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\obj\x86\Debug\Interop.AcroBrokerLib.dll
 C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\obj\x86\Debug\Invoice Management.vbproj.ResolveComReference.cache
 C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\obj\x86\Debug\Invoice Management.exe
 C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\obj\x86\Debug\Invoice Management.xml

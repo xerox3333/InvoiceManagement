@@ -16,6 +16,17 @@ Public Class Invoice
     Private terms As String
     Private termsLength As Integer
 
+    Public Property pAddInvoiceItem As InvoiceItem
+
+        Get
+            Return invoiceItems(0)
+        End Get
+        Set(ByVal value As InvoiceItem)
+            invoiceItems.Add(value)
+        End Set
+
+    End Property
+
     Public Property pInvoiceNo As String
 
         Get
@@ -188,52 +199,29 @@ Public Class Invoice
 
     End Sub
 
-    Public Sub WriteInvoiceToFile(ByVal Location As String)
 
-        Dim fs As New FileStream(Location, FileMode.Append)
+    Public Sub writeInvoiceToFile(ByVal Location As String)
+
+        Dim fs As FileStream = New FileStream(Location, FileMode.OpenOrCreate)
         Dim bw As New BinaryWriter(fs)
 
-        bw.Write("########## BEGIN INVOICE NO: " & invoiceNo & " ##########")
-        bw.Write(invoiceNo)
-        bw.Write(estimateNo)
-        bw.Write(purchaseNo)
-        bw.Write(customerNo)
-        bw.Write(invoiceDate)
-        bw.Write(estimateDate)
-        bw.Write(billingName)
-        bw.Write(billingAddress1)
-        bw.Write(billingAddress2)
-        bw.Write(billingCity)
-        bw.Write(billingPostcode)
-        bw.Write(terms)
-        bw.Write(termsLength)
-        bw.Write(pTotal)
+        'Loop through all the properties in Invoice Class and output to Binary File
+        For Each _property In GetType(Invoice).GetProperties()
 
-        bw.Close()
+            bw.Write(_property.Name)
+
+        Next
+
         fs.Close()
+        bw.Close()
 
     End Sub
 
-    Public Sub ReadinvoiceFromFile(ByVal Location As String)
+    Public Sub readInvoiceFromFile(ByRef InvoiceList As List(Of Invoice), ByVal FileLocation As String)
 
-        Dim fs As New FileStream(Location, FileMode.Open)
+        Dim fs As New FileStream(FileLocation, FileMode.Open)
         Dim br As New BinaryReader(fs)
 
-        br.ReadString()
-        invoiceNo = br.ReadString()
-        estimateNo = br.ReadString()
-        purchaseNo = br.ReadString()
-        customerNo = br.ReadString()
-        invoiceDate = br.ReadString()
-        estimateDate = br.ReadString()
-        billingName = br.ReadString()
-        billingAddress1 = br.ReadString
-        billingAddress2 = br.ReadString()
-        billingCity = br.ReadString()
-        billingPostcode = br.ReadString
-        terms = br.ReadString()
-        termsLength = br.ReadInt32()
-        invoiceTotal = br.ReadSingle()
 
         fs.Close()
         br.Close()

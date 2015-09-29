@@ -2,20 +2,22 @@
 
 Public Class Main
 
-    Dim i As New Invoice()
-    Dim pdf1 As New PDF()
-
     Private Sub Main_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         SplitContainer1.Panel1MinSize = 192
 
-        test()
+        'test()
 
     End Sub
 
     Sub test()
 
-        i.pInvoiceNo = "Bob"
+        Dim i As New Invoice()
+        Dim pdf1 As New PDF()
+        Dim invitem As New InvoiceItem()
+        Dim invItem2 As New InvoiceItem()
+
+        i.pInvoiceNo = "00291"
         i.pEstimateNo = "000"
         i.pCustomerNo = "000"
         i.pPurchaseNo = "000"
@@ -30,10 +32,24 @@ Public Class Main
         i.pTermsLength = 30
         i.pTotal = 120.0
 
-        MsgBox(i.pInvoiceNo)
-
         Dim invoiceList As New List(Of Invoice)
+        Dim itemsList As New List(Of InvoiceItem)
 
+        invitem.pItem = "Things"
+        invitem.pQty = "1"
+        invitem.pUnit = "EA"
+        invitem.pUnitPrice = "12.00"
+        invitem.pPrice = "12.00"
+
+        invItem2.pItem = "Stuff"
+        invItem2.pQty = "5"
+        invItem2.pUnit = "EA"
+        invItem2.pUnitPrice = "1.00"
+        invItem2.pPrice = "5.00"
+
+
+        itemsList.Add(invitem)
+        itemsList.Add(invItem2)
         invoiceList.Add(i)
 
         MsgBox(i.ToString)
@@ -44,7 +60,9 @@ Public Class Main
 
         i.WriteInvoiceToFile("C:\Users\Craig\Desktop\test.bin")
 
-        i.ReadinvoiceFromFile("C:\Users\Craig\Desktop\test.bin")
+        i.readInvoiceFromFile(invoiceList, "C:\Users\Craig\Desktop\test.bin")
+
+        CreateInvoice.LogInvoiceToFile(i, itemsList, "C:\Users\Craig\Desktop\testLog.txt")
 
 
     End Sub
