@@ -2,9 +2,50 @@
 
 Public Class Main
 
+    Dim i As New Invoice()
+    Dim pdf1 As New PDF()
+
     Private Sub Main_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         SplitContainer1.Panel1MinSize = 192
+
+        test()
+
+    End Sub
+
+    Sub test()
+
+        i.pInvoiceNo = "Bob"
+        i.pEstimateNo = "000"
+        i.pCustomerNo = "000"
+        i.pPurchaseNo = "000"
+        i.pInvoiceDate = "12/01/15"
+        i.pEstimateDate = "10/ 01/15"
+        i.pBillingName = "Craig Forbes"
+        i.pBillingAddress1 = "27 Strathburn Gardens"
+        i.pBillingAddress2 = ""
+        i.pBillingCity = "Inverurie"
+        i.pBillingPostcode = "AB51 4RY"
+        i.pTerms = "30 Days"
+        i.pTermsLength = 30
+        i.pTotal = 120.0
+
+        MsgBox(i.pInvoiceNo)
+
+        Dim invoiceList As New List(Of Invoice)
+
+        invoiceList.Add(i)
+
+        MsgBox(i.ToString)
+
+
+        pdf1.drawInvoiceHeader("Bobs Company", "27 Strathburn Gardens", "Inverurie", "Aberdeenshire", "AB51 0NF", "01467671554", "07841377715", "bob@company.com")
+        pdf1.SavePDF("C:\Users\Craig\Desktop", "PDF1_Test.pdf")
+
+        i.WriteInvoiceToFile("C:\Users\Craig\Desktop\test.bin")
+
+        i.ReadinvoiceFromFile("C:\Users\Craig\Desktop\test.bin")
+
 
     End Sub
 
@@ -51,7 +92,7 @@ Public Class Main
         Form.Top = 1
 
         If Width >= 1280 And Height >= 900 Then
-            Form.Width = getDockWidth(SplitContainer1.Panel2) - ((getDockWidth(SplitContainer1.Panel2) / 100) * 50)
+            Form.Width = getDockWidth(SplitContainer1.Panel2) - ((getDockWidth(SplitContainer1.Panel2) / 100) * 45)
             Form.Height = getDockHeight(SplitContainer1.Panel2)
 
         ElseIf (Width <= 1366 And Width > 1280) And (Height >= 768 And Height < 900) Then

@@ -10,43 +10,10 @@ Imports PdfSharp.Pdf
 
 Public Class CreateInvoice
 
-    Dim a As New GlobalVar
-
     'VARIABLES
-    Dim num_rows As Integer = 0
-    Dim num_invoices As Integer = 1
-    Dim invoiceRecords(num_invoices) As Invoice
-    Dim invoiceItems(num_invoices, num_rows) As InvoiceItem
-
-    Private Structure Invoice
-
-        Dim invoiceID As String, customerID As String
-        Dim estimateID As String, purchaseID As String
-        Dim invoiceDate As String, billToName As String
-        Dim billToAddress As String, billToCity As String
-        Dim billToPostcode As String, shipToName As String
-        Dim shipToAddress, shipToCity As String
-        Dim shipToPostcode As String
-        Dim total As String
-        Dim termsType As String
-        Dim termsLength As Integer
-        Dim createdBy As String
-        Dim comments As String
-
-    End Structure
-
-    Private Structure InvoiceItem
-
-        Dim item As String
-        Dim qty As Single
-        Dim unit As String
-        Dim unitPrice As Single
-
-        Dim price As Single
-
-    End Structure
-
-    ' START EVENT PROCEDURES ---------------------------------------------------------------------------------------------------------------
+    Public num_rows As Integer = 0
+    Public num_invoices As Integer = 1
+    Public invoiceList As New List(Of Invoice)
 
     Private Sub CreateInvoice_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
@@ -55,7 +22,8 @@ Public Class CreateInvoice
         Main.SplitContainer1.Panel2.Controls.Add(Me)
         Call Main.DockWindow(Me)
 
-        Call ReadInvoiceFromFile(invoiceRecords, invoiceItems, a.INVOICE_FILE)
+        Call ReadInvoiceFromFile(invoiceList, INVOICE_FILE)
+        'Initialise variables
 
     End Sub
 
@@ -69,24 +37,24 @@ Public Class CreateInvoice
 
     End Sub
 
-    Private Sub SaveAsToolStripButton_Click(sender As System.Object, e As System.EventArgs) Handles SaveAsToolStripButton.Click
-
-        Call SaveInvoice(invoiceRecords, invoiceItems)
-
-    End Sub
-
     Private Sub PreviewToolStripButton_Click(sender As System.Object, e As System.EventArgs) Handles PreviewToolStripButton.Click
 
-        Dim num_rows As Integer = ItemsGrid.RowCount - 1
+        If Application.OpenForms().OfType(Of PreviewInvoice).Any Then
+
+            PreviewInvoice.Close()
+
+        End If
+
+        num_rows = ItemsGrid.RowCount - 1
+
+        Dim tempInvoice(1) As Invoice
+        Dim tempInvoiceItems(1, num_rows) As InvoiceItem
+
+        ItemsGrid.EndEdit()
 
         If CheckFormData() = True Then
 
-            'Call AddToInvoiceStruct(CheckFormData, invoiceRecords)
-            'Call AddToInvoiceItemsStruct(CheckFormData, invoiceItems, num_rows)
-
-            Call SaveInvoice(invoiceRecords, invoiceItems)
-
-            Call CreatePDF(a.previewFileLocation, a.previewFileName, num_rows, invoiceRecords, invoiceItems, a.CompanyName, a.CompanyAddress1, a.CompanyAddress2, a.CompanyCity, a.CompanyPostcode, a.CompanyPhone, a.CompanyMobile, a.CompanyEmail)
+            'Dim pdf As New PDF(a.previewFileLocation, a.previewFileName, 1, num_rows, tempInvoice, tempInvoiceItems, a.CompanyName, a.CompanyAddress1, a.CompanyAddress2, a.CompanyCity, a.CompanyPostcode, a.CompanyPhone, a.CompanyMobile, a.CompanyEmail)
 
             PreviewInvoice.Show(Main)
 
@@ -102,165 +70,107 @@ Public Class CreateInvoice
 
     End Sub
 
-    Private Sub PrintToolStripButton_Click(sender As System.Object, e As System.EventArgs) Handles PrintToolStripButton.Click
+    Private Sub SaveInvoice(ByRef invoices() As Invoice, ByRef items(,) As InvoiceItem)
 
-    End Sub
+        ItemsGrid.EndEdit()
 
-    Private Sub NewToolStripButton_Click(sender As System.Object, e As System.EventArgs) Handles NewToolStripButton.Click
+        If CheckFormData() = "" Then
 
-    End Sub
-
-    Private Sub HelpToolStripButton_Click(sender As System.Object, e As System.EventArgs) Handles HelpToolStripButton.Click
-
-    End Sub
-
-    ' END EVENT PROCEDURES -----------------------------------------------------------------------------------------------------------------
-
-    Private Sub SaveInvoice(ByVal invoices() As Invoice, ByVal items(,) As InvoiceItem)
-
-        Dim tempArray(num_invoices, num_rows)
-
-        If CheckFormData() = True Then
-
-            ReDim Preserve invoices(num_invoices) 'Re-create the array with new space for another record
-
-            'The 2D items array cannot be resized without clearing the data it contains so copy it to a temp 2D array
-
-            Array.Copy(items, tempArray, items.Length - 1)
+            Dim invoice As New Invoice()
+            Dim pdf As New PDF()
 
             num_invoices += 1
-            num_rows = ItemsGrid.RowCount - 1
 
-            ReDim items(num_invoices, num_rows)
+            Call getFormData(invoice)
 
-            'Copy tempArray data back to ItemsArray
-            For counter As Integer = 0 To num_invoices - 1
+            invoiceList.Add(invoice)
 
-                For currentItem As Integer = 0 To num_rows - 1
-
-                    items(counter, currentItem) = tempArray(counter, currentItem)
-
-                Next
-
-            Next
-
-
-            'Save to data structure from form controls
-            Call AddToInvoiceStruct(CheckFormData, invoiceRecords)
-            Call AddToInvoiceItemsStruct(CheckFormData, invoiceItems, num_rows)
-
-            Call WriteInvoiceToFile(a.INVOICE_FILE)
-
-            'Clear contents of controls
-            For Each Control In Me.Controls
-
-
-
-            Next
+        Else
+            'Display error string
 
         End If
 
     End Sub
 
-    Private Sub WriteInvoiceToFile(ByVal FileLocation As String)
+    Public Sub writeInvoiceToFile(ByVal Location As String)
+
+        Dim fs As FileStream = New FileStream(Location, FileMode.Append)
+        Dim bw As New BinaryWriter(fs)
+
+        'Loop through all the properties in Invoice Class and output to Binary File
+        For Each _property In GetType(Invoice).GetProperties()
+
+            bw.Write(_property.Name)
+
+        Next
+
+
+    End Sub
+
+    Private Sub getFormData(ByVal invoice As Invoice)
+
+        invoice.pInvoiceNo = txtInvoiceNo.Text
+        invoice.pEstimateNo = txtEstimateNo.Text
+        invoice.pPurchaseNo = txtPurchaseNo.Text
+
+    End Sub
+
+    Private Sub WriteInvoiceToFile(ByVal invoice As Invoice, ByVal item() As InvoiceItem, ByVal FileLocation As String)
 
         If System.IO.File.Exists(FileLocation) = False Then
 
-            MkDir("C:\Users\" & a.getUserName() & "\Documents\InvoiceManager\Data")
-            File.Create("C:\Users\" & a.getUserName() & "\Documents\InvoiceManager\Data\InvoiceRecords.txt").Dispose()
+            MkDir("C:\Users\" & getUserName() & "\Documents\InvoiceManager\Data")
+            File.Create("C:\Users\" & getUserName() & "\Documents\InvoiceManager\Data\Invoices.txt").Dispose()
 
         End If
 
         'Try
 
-        Dim SW As New System.IO.StreamWriter(FileLocation, False)
+        Dim SW As New System.IO.StreamWriter(FileLocation, True)
 
-        For counter As Integer = 0 To num_invoices - 1
+        SW.Write("Invoice No:")
+        SW.WriteLine(invoice.pInvoiceNo)
 
-            SW.Write("Invoice No:")
-            SW.WriteLine(invoiceRecords(counter).invoiceID)
+        SW.Write("Customer No:")
+        SW.WriteLine(invoice.pCustomerNo)
 
-            SW.Write("Customer No:")
-            SW.WriteLine(invoiceRecords(counter).customerID)
+        SW.Write("Estimate No:")
+        SW.WriteLine(invoice.pEstimateNo)
 
-            SW.Write("Estimate No:")
-            SW.WriteLine(invoiceRecords(counter).estimateID)
+        SW.Write("Purchase No:")
+        SW.WriteLine(invoice.pPurchaseNo)
 
-            SW.Write("Purchase No:")
-            SW.WriteLine(invoiceRecords(counter).purchaseID)
+        SW.Write("Invoice Date:")
+        SW.WriteLine(invoice.pInvoiceDate)
 
-            SW.Write("Invoice Date:")
-            SW.WriteLine(invoiceRecords(counter).invoiceDate)
+        SW.Write("Name:")
+        SW.WriteLine(invoice.pBillingName)
 
-            SW.Write("Name:")
-            SW.WriteLine(invoiceRecords(counter).billToName)
+        SW.Write("Street Address:")
+        SW.WriteLine(invoice.pBillingAddress1)
 
-            SW.Write("Street Address:")
-            SW.WriteLine(invoiceRecords(counter).billToAddress)
+        SW.Write("City/Town:")
+        SW.WriteLine(invoice.pBillingCity)
 
-            SW.Write("City/Town:")
-            SW.WriteLine(invoiceRecords(counter).billToCity)
+        SW.Write("Postcode:")
+        SW.WriteLine(invoice.pBillingPostcode)
 
-            SW.Write("Postcode:")
-            SW.WriteLine(invoiceRecords(counter).billToPostcode)
+        SW.Write("Total:")
+        SW.WriteLine(invoice.pTotal)
 
-            SW.Write("Name:")
-            SW.WriteLine(invoiceRecords(counter).shipToName)
+        SW.Write("Terms Type:")
+        SW.WriteLine(invoice.pTerms)
 
-            SW.Write("Street Address:")
-            SW.WriteLine(invoiceRecords(counter).shipToAddress)
+        SW.Write("Terms Length:")
+        SW.WriteLine(invoice.pTermsLength)
 
-            SW.Write("City/Town:")
-            SW.WriteLine(invoiceRecords(counter).shipToCity)
+        SW.WriteLine("##################### INVOICE ITEMS #####################")
 
-            SW.Write("Postcode:")
-            SW.WriteLine(invoiceRecords(counter).shipToPostcode)
+        SW.WriteLine("<--------------------------------END OF INVOICE " & invoice.pInvoiceNo & "-------------------------------->")
 
-            SW.Write("Total:")
-            SW.WriteLine(invoiceRecords(counter).total)
-
-            SW.Write("Terms Type:")
-            SW.WriteLine(invoiceRecords(counter).termsType)
-
-            SW.Write("Terms Length:")
-            SW.WriteLine(invoiceRecords(counter).termsLength)
-
-            SW.Write("Created By:")
-            SW.WriteLine(invoiceRecords(counter).createdBy)
-
-            SW.Write("Comments:")
-            SW.WriteLine(invoiceRecords(counter).comments)
-
-            SW.WriteLine("##################### INVOICE ITEMS #####################")
-
-            For currentItem As Integer = 0 To num_rows - 1
-
-                'Write Invoice Items
-                SW.WriteLine("<----Item No " & currentItem & " ---->")
-
-                SW.Write("Item: ")
-                SW.WriteLine(invoiceItems(counter, currentItem).item)
-
-                SW.Write("Quantity: ")
-                SW.WriteLine(invoiceItems(counter, currentItem).qty)
-
-                SW.Write("Unit: ")
-                SW.WriteLine(invoiceItems(counter, currentItem).unit)
-
-                SW.Write("Unit Price: ")
-                SW.WriteLine(invoiceItems(counter, currentItem).unitPrice)
-
-                SW.Write("Price: ")
-                SW.WriteLine(invoiceItems(counter, currentItem).price)
-
-            Next
-
-            SW.WriteLine("<--------------------------------END OF INVOICE " & invoiceRecords(counter).invoiceID & "-------------------------------->")
-
-        Next
 
         SW.Close()
-        MsgBox("Invoice " & invoiceRecords(num_invoices - 1).invoiceID & " Sucessfully Saved ", MsgBoxStyle.Information, "Invoice Saved ")
+        MsgBox("Invoice " & invoice.pInvoiceNo & " Sucessfully Saved ", MsgBoxStyle.Information, "Invoice Saved ")
 
         'Catch ex As Exception
         'MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Error Writing to File")
@@ -272,7 +182,7 @@ Public Class CreateInvoice
 
     End Sub
 
-    Private Sub ReadInvoiceFromFile(ByVal ReadInvoice() As Invoice, ByVal ReadInvoiceItems(,) As InvoiceItem, ByVal FileLocation As String)
+    Private Sub ReadInvoiceFromFile(ByVal InvoiceList As List(Of Invoice), ByVal FileLocation As String)
 
         If System.IO.File.Exists(FileLocation) = False Then
 
@@ -280,175 +190,135 @@ Public Class CreateInvoice
 
         End If
 
-        Try
+        'Try
 
-            Dim Line As String
-            Dim tempString(1) As String
-            Dim SR As New System.IO.StreamReader(FileLocation)
+        Dim Line As String
+        Dim tempString(1) As String
+        Dim SR As New System.IO.StreamReader(FileLocation)
 
-            For counter As Integer = 0 To num_invoices - 1
+        'For i As Integer = 0 To num_invoices - 1
 
-                Line = SR.ReadLine
-                tempString = Split(Line, ":")
-                ReadInvoice(counter).invoiceID = tempString(1)
+        'Line = SR.ReadLine
+        'tempString = Split(Line, ":")
+        'Invoices(i).invoiceID = tempString(1)
 
-                Line = SR.ReadLine
-                tempString = Split(Line, ":")
-                ReadInvoice(counter).customerID = tempString(1)
+        'Line = SR.ReadLine
+        'tempString = Split(Line, ":")
+        'Invoices(i).customerID = tempString(1)
 
-                Line = SR.ReadLine
-                tempString = Split(Line, ":")
-                ReadInvoice(counter).estimateID = tempString(1)
+        'Line = SR.ReadLine
+        'tempString = Split(Line, ":")
+        'Invoices(i).estimateID = tempString(1)
 
-                Line = SR.ReadLine
-                tempString = Split(Line, ":")
-                ReadInvoice(counter).purchaseID = tempString(1)
+        'Line = SR.ReadLine
+        'tempString = Split(Line, ":")
+        'Invoices(i).purchaseID = tempString(1)
 
-                Line = SR.ReadLine
-                tempString = Split(Line, ":")
-                ReadInvoice(counter).invoiceDate = tempString(1)
+        'Line = SR.ReadLine
+        'tempString = Split(Line, ":")
+        'Invoices(i).invoiceDate = tempString(1)
 
-                Line = SR.ReadLine
-                tempString = Split(Line, ":")
-                ReadInvoice(counter).billToName = tempString(1)
+        'Line = SR.ReadLine
+        'tempString = Split(Line, ":")
+        'Invoices(i).billToName = tempString(1)
 
-                Line = SR.ReadLine
-                tempString = Split(Line, ":")
-                ReadInvoice(counter).billToAddress = tempString(1)
+        'Line = SR.ReadLine
+        'tempString = Split(Line, ":")
+        'Invoices(i).billToAddress = tempString(1)
 
-                Line = SR.ReadLine
-                tempString = Split(Line, ":")
-                ReadInvoice(counter).billToCity = tempString(1)
+        'Line = SR.ReadLine
+        'tempString = Split(Line, ":")
+        'Invoices(i).billToCity = tempString(1)
 
-                Line = SR.ReadLine
-                tempString = Split(Line, ":")
-                ReadInvoice(counter).billToPostcode = tempString(1)
+        'Line = SR.ReadLine
+        'tempString = Split(Line, ":")
+        'Invoices(i).billToPostcode = tempString(1)
 
-                Line = SR.ReadLine
-                tempString = Split(Line, ":")
-                ReadInvoice(counter).shipToName = tempString(1)
+        'Line = SR.ReadLine
+        'tempString = Split(Line, ":")
+        'Invoices(i).shipToName = tempString(1)
 
-                Line = SR.ReadLine
-                tempString = Split(Line, ":")
-                ReadInvoice(counter).shipToAddress = tempString(1)
+        'Line = SR.ReadLine
+        'tempString = Split(Line, ":")
+        'Invoices(i).shipToAddress = tempString(1)
 
-                Line = SR.ReadLine
-                tempString = Split(Line, ":")
-                ReadInvoice(counter).shipToCity = tempString(1)
+        'Line = SR.ReadLine
+        'tempString = Split(Line, ":")
+        'Invoices(i).shipToCity = tempString(1)
 
-                Line = SR.ReadLine
-                tempString = Split(Line, ":")
-                ReadInvoice(counter).shipToPostcode = tempString(1)
+        'Line = SR.ReadLine
+        'tempString = Split(Line, ":")
+        'Invoices(i).shipToPostcode = tempString(1)
 
-                Line = SR.ReadLine
-                tempString = Split(Line, ":")
-                ReadInvoice(counter).total = tempString(1)
+        'Line = SR.ReadLine
+        'tempString = Split(Line, ":")
+        'Invoices(i).total = tempString(1)
 
-                Line = SR.ReadLine
-                tempString = Split(Line, ":")
-                ReadInvoice(counter).termsType = tempString(1)
+        'Line = SR.ReadLine
+        'tempString = Split(Line, ":")
+        'Invoices(i).termsType = tempString(1)
 
-                Line = SR.ReadLine
-                tempString = Split(Line, ":")
-                ReadInvoice(counter).termsLength = tempString(1)
+        'Line = SR.ReadLine
+        'tempString = Split(Line, ":")
+        'Invoices(i).termsLength = tempString(1)
 
-                Line = SR.ReadLine
-                tempString = Split(Line, ":")
-                ReadInvoice(counter).createdBy = tempString(1)
+        'Line = SR.ReadLine
+        'tempString = Split(Line, ":")
+        'Invoices(i).createdBy = tempString(1)
 
-                Line = SR.ReadLine
-                tempString = Split(Line, ":")
-                ReadInvoice(counter).comments = tempString(1)
+        'Line = SR.ReadLine
+        'tempString = Split(Line, ":")
+        'Invoices(i).comments = tempString(1)
 
-                SR.ReadLine()
+        '    SR.ReadLine()
 
-                For currentItem As Integer = 0 To num_rows - 1
+        '    Dim currentItem As Integer = 0
 
-                    SR.ReadLine()
-                    Line = SR.ReadLine
-                    tempString = Split(Line, ":")
-                    ReadInvoiceItems(counter, currentItem).item = tempString(1)
+        '    For currentItem = 0 To num_items - 1
 
-                    SR.ReadLine()
-                    Line = SR.ReadLine
-                    tempString = Split(Line, "")
-                    ReadInvoiceItems(counter, currentItem).qty = tempString(1)
+        '        SR.ReadLine()
+        '        Line = SR.ReadLine
+        '        tempString = Split(Line, ":")
+        '        items(i, currentItem).item = tempString(1)
 
-                    SR.ReadLine()
-                    Line = SR.ReadLine
-                    tempString = Split(Line, "")
-                    ReadInvoiceItems(counter, currentItem).unit = tempString(1)
+        '        SR.ReadLine()
+        '        Line = SR.ReadLine
+        '        tempString = Split(Line, "")
+        '        Items(i, currentItem).qty = tempString(1)
 
-                    SR.ReadLine()
-                    Line = SR.ReadLine
-                    tempString = Split(Line, "")
-                    ReadInvoiceItems(counter, currentItem).unitPrice = tempString(1)
+        '        SR.ReadLine()
+        '        Line = SR.ReadLine
+        '        tempString = Split(Line, "")
+        '        Items(i, currentItem).unit = tempString(1)
 
-                    SR.ReadLine()
-                    Line = SR.ReadLine
-                    tempString = Split(Line, "")
-                    ReadInvoiceItems(counter, currentItem).price = tempString(1)
+        '        SR.ReadLine()
+        '        Line = SR.ReadLine
+        '        tempString = Split(Line, "")
+        '        Items(i, currentItem).unitPrice = tempString(1)
 
-                Next
+        '        SR.ReadLine()
+        '        Line = SR.ReadLine
+        '        tempString = Split(Line, "")
+        '        Items(i, currentItem).Price = tempString(1)
 
-                SR.ReadLine()
+        '    Next
 
-            Next
+        '    SR.ReadLine()
 
-            SR.Close()
+        'Next
 
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Error Reading From File")
+        'SR.Close()
 
-        Finally
+        'Catch ex As Exception
+        'MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Error Reading From File")
 
-        End Try
+        'Finally
 
-    End Sub
-
-    Private Sub AddToInvoiceStruct(ByVal Valid As Boolean, ByVal invoices As Invoice())
-
-        If Valid = True Then
-
-            'Add form values to array
-            invoices(num_invoices - 1).customerID = txtCutomerID.Text
-            invoices(num_invoices - 1).invoiceID = txtInvoiceNo.Text
-            invoices(num_invoices - 1).purchaseID = txtPurchaseNo.Text
-            invoices(num_invoices - 1).termsType = txtTerms.SelectedValue
-            invoices(num_invoices - 1).termsLength = cboTermsLength.Value
-            invoices(num_invoices - 1).invoiceDate = txtDate.Text
-            invoices(num_invoices - 1).billToName = txtBillToName.Text
-            invoices(num_invoices - 1).billToAddress = txtBillToAddress.Text
-            invoices(num_invoices - 1).billToCity = txtBillToCity.Text
-            invoices(num_invoices - 1).billToPostcode = txtBillToPostcode.Text
-            invoices(num_invoices - 1).shipToName = txtShipToName.Text
-            invoices(num_invoices - 1).shipToAddress = txtShipToAddress.Text
-            invoices(num_invoices - 1).shipToCity = txtShipToCity.Text
-            invoices(num_invoices - 1).shipToPostcode = txtShipToPostcode.Text
-
-        End If
+        'End Try
 
     End Sub
 
-    Private Sub AddToInvoiceItemsStruct(ByVal Valid As Boolean, ByVal items As InvoiceItem(,), ByVal num_rows As Integer)
-
-        If Valid = True Then
-
-            For counter As Integer = 0 To num_rows - 1
-
-                items(num_invoices - 1, counter).item = ItemsGrid.Item(0, counter).Value
-                items(num_invoices - 1, counter).qty = ItemsGrid.Item(1, counter).Value
-                items(num_invoices - 1, counter).unit = ItemsGrid.Item(2, counter).Value
-                items(num_invoices - 1, counter).unitPrice = ItemsGrid.Item(3, counter).Value
-                items(num_invoices - 1, counter).price = ItemsGrid.Item(4, counter).Value
-
-            Next
-
-        End If
-
-    End Sub
-
-    Private Function CheckFormData() As Boolean
+    Private Function CheckFormData() As String
 
         Dim errorString As String = ""
 
@@ -505,7 +375,7 @@ Public Class CreateInvoice
 
         End With
 
-        With txtTerms
+        With cboTerms
 
             If (.Text) = Nothing Then
 
@@ -542,12 +412,11 @@ Public Class CreateInvoice
 
             If (.Text) = Nothing Then
 
-                .Text = Nothing
                 .BackColor = Color.Red
                 errorString += "The Bill To Name must not be nothing" & vbCrLf
 
             Else
-                .ForeColor = Color.White
+                .BackColor = Color.White
 
             End If
 
@@ -700,17 +569,7 @@ Public Class CreateInvoice
 
         Next
 
-        If errorString = "" Then
-
-            Return True
-
-        Else
-            MsgBox(errorString, MsgBoxStyle.Exclamation, "Form validation error")
-
-            errorString = ""
-            Return False
-
-        End If
+        Return errorString
 
     End Function
 
@@ -725,99 +584,6 @@ Public Class CreateInvoice
         Return 0
 
     End Function
-
-    Private Sub CreatePDF(ByVal saveLocation As String, ByVal saveName As String, ByVal num_rows As Integer, ByVal invoices As Invoice(), ByVal invoiceItems As InvoiceItem(,), ByVal companyName As String, ByVal companyAddress1 As String, ByVal companyAddress2 As String, ByVal companyCity As String, ByVal companyPostcode As String, ByVal companyPhone As String, ByVal companyMobile As String, ByVal companyEmail As String)
-
-        Dim pdf As PdfDocument = New PdfDocument
-        Dim pdfPage As PdfPage = pdf.AddPage
-        Dim g As XGraphics = XGraphics.FromPdfPage(pdfPage)
-        Dim headerFont As XFont = New XFont("Calibri", 24, XFontStyle.Regular)
-        Dim headerFont2 As XFont = New XFont("Calibri", 26, XFontStyle.Bold)
-        Dim detailFont As XFont = New XFont("Calibri", 10, XFontStyle.Regular)
-        Dim tableHeaderFont As XFont = New XFont("Calibri", 12, XFontStyle.Bold)
-        Dim pen As XPen = New XPen(XColors.Black, 1)
-        Dim pen2 As XPen = New XPen(XColors.Black, 2)
-
-        'Invoice Header
-        g.DrawRectangle(XBrushes.LightGray, New XRect(20, 20, (pdfPage.Width.Point - 40), 100)) 'Header background
-        g.DrawRectangle(XBrushes.DarkGray, New XRect(20, 120, (pdfPage.Width.Point - 40), 15)) 'Header bottom
-        g.DrawString("INVOICE", headerFont, XBrushes.WhiteSmoke, New XRect((pdfPage.Width.Point - 110), 20, 100, 150), XStringFormats.TopLeft) 'INVOICE text
-
-        g.DrawString(companyName, headerFont2, XBrushes.SteelBlue, New XRect(30, 50, 250, 0)) 'Company Name
-
-        g.DrawString(companyAddress1, detailFont, XBrushes.WhiteSmoke, New XRect(30, 65, 100, 0)) 'Company address
-        g.DrawString(companyAddress2, detailFont, XBrushes.WhiteSmoke, New XRect(30, 75, 100, 0))
-        g.DrawString(companyCity, detailFont, XBrushes.WhiteSmoke, New XRect(30, 85, 100, 0))
-        g.DrawString(companyPostcode, detailFont, XBrushes.WhiteSmoke, New XRect(30, 95, 100, 0))
-
-        g.DrawString("Phone: " & companyPhone & "   " & "Mobile: " & companyMobile, detailFont, XBrushes.WhiteSmoke, New XRect((pdfPage.Width.Point - 210), 65, 100, 0)) 'Contact details
-        g.DrawString("Email: " & companyEmail, detailFont, XBrushes.WhiteSmoke, New XRect((pdfPage.Width.Point - 210), 75, 100, 0))
-
-        g.DrawRectangle(XBrushes.LightGray, New XRect(35, 155, 100, 80)) 'Customer Details background
-        g.DrawString("Customer Info", detailFont, XBrushes.WhiteSmoke, New XRect(40, 165, 100, 0))
-        g.DrawString(invoices(invoices.Length - 1).billToName, detailFont, XBrushes.Black, New XRect(140, 170, 100, 0))
-        g.DrawString(invoices(invoices.Length - 1).billToAddress, detailFont, XBrushes.Black, New XRect(140, 190, 100, 0))
-        g.DrawString(invoices(invoices.Length - 1).billToCity, detailFont, XBrushes.Black, New XRect(140, 210, 100, 0))
-        g.DrawString(invoices(invoices.Length - 1).billToPostcode, detailFont, XBrushes.Black, New XRect(140, 230, 100, 0))
-
-        g.DrawRectangle(XBrushes.LightGray, New XRect(275, 155, 100, 80)) 'Invoice Details background
-        g.DrawString("Invoice Info ", detailFont, XBrushes.WhiteSmoke, New XRect(280, 165, 100, 0))
-        g.DrawString("Date: ", detailFont, XBrushes.Black, New XRect(380, 170, 100, 0))
-        g.DrawString("Invoice No: ", detailFont, XBrushes.Black, New XRect(380, 190, 100, 0))
-        g.DrawString("Purchase No: ", detailFont, XBrushes.Black, New XRect(380, 210, 100, 0))
-
-        g.DrawString(invoices(invoices.Length - 1).invoiceDate, detailFont, XBrushes.Black, New XRect(450, 170, 100, 0))
-        g.DrawString(invoices(invoices.Length - 1).invoiceID, detailFont, XBrushes.Black, New XRect(450, 190, 100, 0))
-        g.DrawString(invoices(invoices.Length - 1).purchaseID, detailFont, XBrushes.Black, New XRect(450, 210, 100, 0))
-
-        'Table Header
-        g.DrawString("Item", tableHeaderFont, XBrushes.CadetBlue, New XRect(25, 255, 50, 0))
-        g.DrawString("Qty", tableHeaderFont, XBrushes.CadetBlue, New XRect(215, 255, 50, 0))
-        g.DrawString("Unit", tableHeaderFont, XBrushes.CadetBlue, New XRect(315, 255, 50, 0))
-        g.DrawString("Unit Price", tableHeaderFont, XBrushes.CadetBlue, New XRect(415, 255, 50, 0))
-        g.DrawString("Price", tableHeaderFont, XBrushes.CadetBlue, New XRect(515, 255, 50, 0))
-        g.DrawLine(pen2, 20, 260, (pdfPage.Width.Point - 20), 260) 'Item Table Top
-
-        Dim yPos As Integer = 260
-
-        g.DrawLine(pen, 200, yPos, 200, ((num_rows * 20) + yPos))
-        g.DrawLine(pen, 300, yPos, 300, ((num_rows * 20) + yPos))
-        g.DrawLine(pen, 400, yPos, 400, ((num_rows * 20) + yPos))
-        g.DrawLine(pen, 500, yPos, 500, ((num_rows * 20) + yPos))
-
-        'Todo implement overflow page for table
-        If num_rows > 20 Then
-
-            num_rows = 20
-
-        End If
-
-        'For every item draw new row
-        For counter As Integer = 0 To num_rows
-
-            yPos += 20
-            g.DrawLine(pen, 20, yPos, (pdfPage.Width.Point - 20), yPos)
-
-        Next
-
-        'Set y position to begin drawing Invoice Items into table
-        yPos = 265
-
-        'Draw item names on table
-        For counter As Integer = 0 To num_rows - 2
-
-            g.DrawString(invoiceItems(num_invoices - 1, counter).item, detailFont, XBrushes.Black, New XRect(20, (yPos + 10), 100, 0))
-            g.DrawString(invoiceItems(num_invoices - 1, counter).qty, detailFont, XBrushes.Black, New XRect(210, (yPos + 10), 100, 0))
-            g.DrawString(invoiceItems(num_invoices - 1, counter).unit, detailFont, XBrushes.Black, New XRect(310, (yPos + 10), 100, 0))
-            g.DrawString(Format(invoiceItems(num_invoices - 1, counter).unitPrice, "Currency"), detailFont, XBrushes.Black, New XRect(410, (yPos + 10), 100, 0))
-            g.DrawString(Format(invoiceItems(num_invoices - 1, counter).price, "Currency"), detailFont, XBrushes.Black, New XRect(510, (yPos + 10), 100, 0))
-            yPos += 20
-
-        Next
-
-        pdf.Save(saveLocation & "\" & saveName)
-
-    End Sub
 
     Private Sub chkSameAsBill_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkSameAsBill.CheckedChanged
 

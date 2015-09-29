@@ -24,7 +24,7 @@ Partial Class PreviewInvoice
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(PreviewInvoice))
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
-        Me.OpenToolStripButton = New System.Windows.Forms.ToolStripButton()
+        Me.SaveToolStripButton = New System.Windows.Forms.ToolStripButton()
         Me.SaveAsToolStripButton = New System.Windows.Forms.ToolStripButton()
         Me.PrintToolStripButton = New System.Windows.Forms.ToolStripButton()
         Me.toolStripSeparator = New System.Windows.Forms.ToolStripSeparator()
@@ -46,7 +46,7 @@ Partial Class PreviewInvoice
         Me.ToolStrip1.Font = New System.Drawing.Font("Arial Narrow", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
         Me.ToolStrip1.ImageScalingSize = New System.Drawing.Size(32, 32)
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenToolStripButton, Me.SaveAsToolStripButton, Me.PrintToolStripButton, Me.toolStripSeparator, Me.CopyToolStripButton, Me.PasteToolStripButton, Me.toolStripSeparator2, Me.CloseToolStripButton, Me.HelpToolStripButton})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveToolStripButton, Me.SaveAsToolStripButton, Me.PrintToolStripButton, Me.toolStripSeparator, Me.CopyToolStripButton, Me.PasteToolStripButton, Me.toolStripSeparator2, Me.CloseToolStripButton, Me.HelpToolStripButton})
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip1.Name = "ToolStrip1"
         Me.ToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
@@ -54,17 +54,17 @@ Partial Class PreviewInvoice
         Me.ToolStrip1.TabIndex = 7
         Me.ToolStrip1.Text = "ToolStrip1"
         '
-        'OpenToolStripButton
+        'SaveToolStripButton
         '
-        Me.OpenToolStripButton.Image = Global.Invoice_Management.My.Resources.Resources.open_icon
-        Me.OpenToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.OpenToolStripButton.Name = "OpenToolStripButton"
-        Me.OpenToolStripButton.Size = New System.Drawing.Size(72, 36)
-        Me.OpenToolStripButton.Text = "&Open"
+        Me.SaveToolStripButton.Image = Global.Invoice_Management.My.Resources.Resources.save_icon
+        Me.SaveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.SaveToolStripButton.Name = "SaveToolStripButton"
+        Me.SaveToolStripButton.Size = New System.Drawing.Size(70, 36)
+        Me.SaveToolStripButton.Text = "&Save"
         '
         'SaveAsToolStripButton
         '
-        Me.SaveAsToolStripButton.Image = Global.Invoice_Management.My.Resources.Resources.save_icon
+        Me.SaveAsToolStripButton.Image = Global.Invoice_Management.My.Resources.Resources.save_as_icon
         Me.SaveAsToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.SaveAsToolStripButton.Name = "SaveAsToolStripButton"
         Me.SaveAsToolStripButton.Size = New System.Drawing.Size(86, 36)
@@ -146,7 +146,7 @@ Partial Class PreviewInvoice
         Me.Controls.Add(Me.ToolStrip1)
         Me.Name = "PreviewInvoice"
         Me.ShowIcon = False
-        Me.Text = "PreviewInvoice"
+        Me.Text = "Preview Invoice"
         Me.ToolStrip1.ResumeLayout(False)
         Me.ToolStrip1.PerformLayout()
         CType(Me.AxAcroPDF, System.ComponentModel.ISupportInitialize).EndInit()
@@ -155,7 +155,7 @@ Partial Class PreviewInvoice
 
     End Sub
     Friend WithEvents ToolStrip1 As System.Windows.Forms.ToolStrip
-    Friend WithEvents OpenToolStripButton As System.Windows.Forms.ToolStripButton
+    Friend WithEvents SaveToolStripButton As System.Windows.Forms.ToolStripButton
     Friend WithEvents SaveAsToolStripButton As System.Windows.Forms.ToolStripButton
     Friend WithEvents PrintToolStripButton As System.Windows.Forms.ToolStripButton
     Friend WithEvents toolStripSeparator As System.Windows.Forms.ToolStripSeparator

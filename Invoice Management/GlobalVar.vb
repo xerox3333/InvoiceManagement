@@ -1,21 +1,22 @@
-﻿Class GlobalVar
+﻿Public Class GlobalVar
 
-    Public INVOICE_FILE As String = ("C:\Users\" & getUserName() & "\Documents\InvoiceManager\Data\InvoiceRecords.txt")
-    Public previewFileLocation As String = ("C:\temp")
-    Public previewFileName As String = ("preview.pdf")
+    Public Shared INVOICE_FILE As String = ("C:\Users\" & getUserName() & "\Documents\InvoiceManager\Data\InvoiceRecords.txt")
+    Public Shared previewFileLocation As String = ("C:\temp")
+    Public Shared previewFileName As String = ("preview.pdf")
 
-    Public OwnerName As String = ""
-    Public CompanyName As String = "Company Name"
-    Public CompanyAddress1 As String = "Company Address1"
-    Public CompanyAddress2 As String = "Comany Address2"
-    Public CompanyCity As String = "Town/City"
-    Public CompanyPostcode As String = "Postcode"
-    Public CompanyPhone As String = "Phone"
-    Public CompanyMobile As String = "Mobile"
-    Public CompanyEmail As String = "Email"
-    Public Website As String = "Website"
+    Public Shared OwnerName As String = ""
+    Public Shared CompanyName As String = "Company Name"
+    Public Shared CompanyAddress1 As String = "Company Address1"
+    Public Shared CompanyAddress2 As String = "Comany Address2"
+    Public Shared CompanyCity As String = "Town/City"
+    Public Shared CompanyPostcode As String = "Postcode"
+    Public Shared CompanyPhone As String = "Phone"
+    Public Shared CompanyMobile As String = "Mobile"
+    Public Shared CompanyEmail As String = "Email"
+    Public Shared Website As String = "Website"
+    Public Shared Description As String = "Description"
 
-    Function getUserName() As String
+    Public Shared Function getUserName() As String
 
         If TypeOf My.User.CurrentPrincipal Is System.Security.Principal.WindowsPrincipal Then
             ' The application is using Windows authentication.

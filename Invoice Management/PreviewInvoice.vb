@@ -21,16 +21,13 @@
 
     End Sub
 
-    Private Sub OpenToolStripButton_Click(sender As System.Object, e As System.EventArgs) Handles OpenToolStripButton.Click
+    Private Sub SaveToolStripButton_Click(sender As System.Object, e As System.EventArgs) Handles SaveToolStripButton.Click
 
-        Dim loadedFile As String
-        Dim fileIsOpen As Boolean
-
-        Call openFile("", loadedFile, fileIsOpen)
+        'Copy image in preview location to Invoices Folder
 
     End Sub
 
-    Private Function openFile(ByVal openFileLocation As String, loadedFile As String, fileIsOpen As Boolean)
+    Private Function openFile(ByVal openFileLocation As String, ByVal loadedFile As String, ByVal fileIsOpen As Boolean)
 
         'This routine takes the file location of the file to be opened and checks if the open button is pressed on the open file dialog window_
         'the file specified in the open file dialog is then checked to make sure it exists before loading the file into AxAcroPDF control
