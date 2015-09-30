@@ -133,8 +133,6 @@ Public Class CreateInvoice
 
         num_invoices += 1
 
-        MsgBox("Invoice Successfully Saved! ", MsgBoxStyle.Information, "Saved")
-
         'Else
         '    'Display error string
         '    MsgBox("Test")
@@ -195,21 +193,56 @@ Public Class CreateInvoice
 
     End Sub
 
-    Public Sub writeInvoiceToFile(ByVal invoice As Invoice, ByVal Location As String, ByVal FileName As String)
+    Public Sub writeInvoiceToFile(ByVal invoice As Invoice, ByVal Location As String, ByRef FileName As String)
 
-        Dim fs As FileStream = New FileStream(Location & "\" & FileName & ".bin", FileMode.OpenOrCreate)
-        Dim bw As New BinaryWriter(fs)
+        Dim FileLocation As String = Location & "\" & FileName & ".bin"
+        Dim SaveDialog As SaveFileDialog = New SaveFileDialog
 
-        'Loop through all the properties in Invoice Class and output to Binary File
-        For Each _property In GetType(Invoice).GetProperties()
+        'Check that the data folder is created in users documents directory
+        If Not Directory.Exists(Location) Then
 
-            bw.Write(_property.Name)
-            bw.Write(_property.GetValue(invoice, Nothing))
+            MkDir(Location)
 
-        Next
+        End If
 
-        fs.Close()
-        bw.Close()
+        Try
+
+            SaveDialog.CreatePrompt = False
+            SaveDialog.OverwritePrompt = True
+            SaveDialog.FileName = FileName
+            SaveDialog.DefaultExt = "bin"
+            SaveDialog.AddExtension = True
+            SaveDialog.Filter = "Invoice file|*.bin"
+            SaveDialog.InitialDirectory = Location
+
+            Dim result As DialogResult = SaveDialog.ShowDialog()
+
+            If result = DialogResult.OK Then
+
+                Dim fs As FileStream = New FileStream(FileLocation, FileMode.OpenOrCreate)
+                Dim bw As New BinaryWriter(fs)
+
+                'Loop through all the properties in Invoice Class and output to Binary File
+                For Each _property In GetType(Invoice).GetProperties()
+
+                    bw.Write(_property.Name)
+                    bw.Write(_property.GetValue(invoice, Nothing))
+
+                Next
+
+                fs.Close()
+                bw.Close()
+
+                MsgBox("Invoice " & invoice.pInvoiceNo & " Successfully Saved! ", MsgBoxStyle.Information, "Saved")
+
+            End If
+
+        Catch ex As Exception
+            MsgBox("Somthing went wrong while trying to save the invoice to file." & vbCrLf & "You can try to amend this error in:" & Location & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Somthing went wrong ")
+
+        Finally
+
+        End Try
 
     End Sub
 
