@@ -13,9 +13,9 @@ Public Class Invoice
     Private purchaseNo As String
     Private customerNo As String
     Private billingName, billingAddress1, billingAddress2, billingCity, billingPostcode As String
-    Private invoiceTotal As Single
+    Private invoiceTotal As String
     Private terms As String
-    Private termsLength As Integer
+    Private termsLength As String
 
     'Constructor
     Public Sub New()
@@ -199,16 +199,5 @@ Public Class Invoice
         Return info
 
     End Function
-
-    Public Sub readInvoiceFromFile(ByRef InvoiceList As List(Of Invoice), ByVal FileLocation As String)
-
-        Dim fs As New FileStream(FileLocation, FileMode.Open)
-        Dim br As New BinaryReader(fs)
-
-
-        fs.Close()
-        br.Close()
-
-    End Sub
 
 End Class

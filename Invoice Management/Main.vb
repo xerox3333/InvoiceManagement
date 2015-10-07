@@ -12,62 +12,62 @@ Public Class Main
 
     End Sub
 
-    Sub test()
+    'Sub test()
 
-        Dim i As New Invoice()
-        Dim pdf1 As New PDF()
-        Dim invitem As New InvoiceItem()
-        Dim invItem2 As New InvoiceItem()
+    '    Dim i As New Invoice()
+    '    Dim pdf1 As New PDF()
+    '    Dim invitem As New InvoiceItem()
+    '    Dim invItem2 As New InvoiceItem()
 
-        i.pInvoiceNo = "00291"
-        i.pEstimateNo = "000"
-        i.pCustomerNo = "000"
-        i.pPurchaseNo = "000"
-        i.pInvoiceDate = "12/01/15"
-        i.pEstimateDate = "10/ 01/15"
-        i.pBillingName = "Craig Forbes"
-        i.pBillingAddress1 = "27 Strathburn Gardens"
-        i.pBillingAddress2 = ""
-        i.pBillingCity = "Inverurie"
-        i.pBillingPostcode = "AB51 4RY"
-        i.pTerms = "30 Days"
-        i.pTermsLength = 30
-        i.pTotal = 120.0
+    '    i.pInvoiceNo = "00291"
+    '    i.pEstimateNo = "000"
+    '    i.pCustomerNo = "000"
+    '    i.pPurchaseNo = "000"
+    '    i.pInvoiceDate = "12/01/15"
+    '    i.pEstimateDate = "10/ 01/15"
+    '    i.pBillingName = "Craig Forbes"
+    '    i.pBillingAddress1 = "27 Strathburn Gardens"
+    '    i.pBillingAddress2 = ""
+    '    i.pBillingCity = "Inverurie"
+    '    i.pBillingPostcode = "AB51 4RY"
+    '    i.pTerms = "30 Days"
+    '    i.pTermsLength = 30
+    '    i.pTotal = 120.0
 
-        Dim invoiceList As New List(Of Invoice)
-        Dim itemsList As New List(Of InvoiceItem)
+    '    Dim invoiceList As New List(Of Invoice)
+    '    Dim itemsList As New List(Of InvoiceItem)
 
-        invitem.pItem = "Things"
-        invitem.pQty = "1"
-        invitem.pUnit = "EA"
-        invitem.pUnitPrice = "12.00"
-        invitem.pPrice = "12.00"
+    '    invitem.pItem = "Things"
+    '    invitem.pQty = "1"
+    '    invitem.pUnit = "EA"
+    '    invitem.pUnitPrice = "12.00"
+    '    invitem.pPrice = "12.00"
 
-        invItem2.pItem = "Stuff"
-        invItem2.pQty = "5"
-        invItem2.pUnit = "EA"
-        invItem2.pUnitPrice = "1.00"
-        invItem2.pPrice = "5.00"
-
-
-        itemsList.Add(invitem)
-        itemsList.Add(invItem2)
-        invoiceList.Add(i)
-
-        MsgBox(i.ToString)
+    '    invItem2.pItem = "Stuff"
+    '    invItem2.pQty = "5"
+    '    invItem2.pUnit = "EA"
+    '    invItem2.pUnitPrice = "1.00"
+    '    invItem2.pPrice = "5.00"
 
 
-        pdf1.drawInvoiceHeader("Bobs Company", "27 Strathburn Gardens", "Inverurie", "Aberdeenshire", "AB51 0NF", "01467671554", "07841377715", "bob@company.com")
-        pdf1.SavePDF("C:\Users\Craig\Desktop", "PDF1_Test.pdf")
+    '    itemsList.Add(invitem)
+    '    itemsList.Add(invItem2)
+    '    invoiceList.Add(i)
 
-        CreateInvoice.writeInvoiceToFile(i, invoicePath & "\", "TestFile1")
-
-        i.readInvoiceFromFile(invoiceList, "C:\Users\Craig\Desktop\test.bin")
-
-        CreateInvoice.LogInvoiceToFile(i, itemsList, "C:\Users\Craig\Desktop\testLog.txt")
+    '    MsgBox(i.ToString)
 
 
-    End Sub
+    '    pdf1.drawInvoiceHeader("Bobs Company", "27 Strathburn Gardens", "Inverurie", "Aberdeenshire", "AB51 0NF", "01467671554", "07841377715", "bob@company.com")
+    '    pdf1.SavePDF("C:\Users\Craig\Desktop", "PDF1_Test.pdf")
+
+    '    CreateInvoice.writeInvoiceToFile(i, invoicePath & "\", "TestFile1")
+
+    '    i.readInvoiceFromFile(invoiceList, "C:\Users\Craig\Desktop\test.bin")
+
+    '    CreateInvoice.LogInvoiceToFile(i, itemsList, "C:\Users\Craig\Desktop\testLog.txt")
+
+
+    'End Sub
 
     Private Sub Main_SizeChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.SizeChanged
 
@@ -95,7 +95,7 @@ Public Class Main
     Public Function getDockHeight(ByVal panel As System.Windows.Forms.SplitterPanel)
 
         Dim Height As Integer
-        Height = panel.Height - 30
+        Height = panel.Height - ListBox1.Height
 
         Return Height
 

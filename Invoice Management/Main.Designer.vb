@@ -33,6 +33,7 @@ Partial Class Main
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.cmdViewInvoice = New System.Windows.Forms.Button()
         Me.cmdCreateInvoice = New System.Windows.Forms.Button()
+        Me.ListBox1 = New System.Windows.Forms.ListBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -48,7 +49,6 @@ Partial Class Main
         Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ListBox1 = New System.Windows.Forms.ListBox()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
@@ -69,6 +69,7 @@ Partial Class Main
         '
         'SplitContainer1.Panel1
         '
+        Me.SplitContainer1.Panel1.AutoScroll = True
         Me.SplitContainer1.Panel1.BackColor = System.Drawing.SystemColors.Control
         Me.SplitContainer1.Panel1.Controls.Add(Me.GroupBox3)
         Me.SplitContainer1.Panel1.Controls.Add(Me.cmdOptions)
@@ -79,7 +80,7 @@ Partial Class Main
         '
         'SplitContainer1.Panel2
         '
-        Me.SplitContainer1.Panel2.BackColor = System.Drawing.SystemColors.Control
+        Me.SplitContainer1.Panel2.BackColor = System.Drawing.Color.LightSteelBlue
         Me.SplitContainer1.Panel2.Controls.Add(Me.ListBox1)
         Me.SplitContainer1.Panel2.Controls.Add(Me.Label1)
         Me.SplitContainer1.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No
@@ -184,12 +185,25 @@ Partial Class Main
         Me.cmdCreateInvoice.Text = "Create Invoice"
         Me.cmdCreateInvoice.UseVisualStyleBackColor = True
         '
+        'ListBox1
+        '
+        Me.ListBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ListBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.ListBox1.FormattingEnabled = True
+        Me.ListBox1.Location = New System.Drawing.Point(0, 500)
+        Me.ListBox1.Name = "ListBox1"
+        Me.ListBox1.ScrollAlwaysVisible = True
+        Me.ListBox1.Size = New System.Drawing.Size(883, 93)
+        Me.ListBox1.TabIndex = 0
+        Me.ListBox1.TabStop = False
+        '
         'Label1
         '
         Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label1.AutoSize = True
         Me.Label1.ForeColor = System.Drawing.SystemColors.ButtonShadow
-        Me.Label1.Location = New System.Drawing.Point(727, 564)
+        Me.Label1.Location = New System.Drawing.Point(730, 564)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(156, 13)
         Me.Label1.TabIndex = 0
@@ -286,15 +300,6 @@ Partial Class Main
         Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
         Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(44, 35)
         Me.HelpToolStripMenuItem.Text = "Help"
-        '
-        'ListBox1
-        '
-        Me.ListBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ListBox1.FormattingEnabled = True
-        Me.ListBox1.Location = New System.Drawing.Point(515, 174)
-        Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.Size = New System.Drawing.Size(359, 407)
-        Me.ListBox1.TabIndex = 1
         '
         'Main
         '

@@ -1,6 +1,7 @@
 ﻿Public Class GlobalVar
 
     Public Shared invoicePath As String = ("C:\Users\" & getUserName() & "\Documents\InvoiceManager\Data")
+    Public Shared logPath As String = ("C:\Users\" & getUserName() & "\Documents\InvoiceManager\Log")
     Public Shared previewFileLocation As String = ("C:\temp")
     Public Shared previewFileName As String = ("preview.pdf")
 

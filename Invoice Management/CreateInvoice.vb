@@ -26,9 +26,6 @@ Public Class CreateInvoice
         Main.SplitContainer1.Panel2.Controls.Add(Me)
         Call Main.DockWindow(Me)
 
-        'Call invoice.readInvoiceFromFile(invoiceList, "C:\Users\Craig\Desktop\test.bin")
-        'Initialise variables
-
     End Sub
 
     Private Sub CreateInvoice_SizeChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.SizeChanged
@@ -96,6 +93,7 @@ Public Class CreateInvoice
         newInvoice.pBillingPostcode = txtBillToPostcode.Text
         newInvoice.pTerms = cboTerms.Text
         newInvoice.pTermsLength = cboTermsLength.Value
+        newInvoice.pTotal = "0"
 
         invoiceList.Add(newInvoice) 'Append the new invoice to the invoice list
 
@@ -130,6 +128,7 @@ Public Class CreateInvoice
         Dim newInvoiceItem As New InvoiceItem
         Call getFormData(newInvoice, newInvoiceItem) 'Add data to instance of Invoice
         Call writeInvoiceToFile(newInvoice, invoicePath, timeStamp & "_Invoice_" & newInvoice.pInvoiceNo)
+        Call LogInvoiceToFile(newInvoice, logPath)
 
         num_invoices += 1
 
@@ -141,46 +140,48 @@ Public Class CreateInvoice
 
     End Sub
 
-    Public Sub LogInvoiceToFile(ByVal invoice As Invoice, ByVal items As List(Of InvoiceItem), ByVal FileLocation As String)
+    Public Sub LogInvoiceToFile(ByVal invoice As Invoice, ByVal FileLocation As String)
 
-        If Not System.IO.File.Exists(FileLocation) Then
+        If Not System.IO.File.Exists(FileLocation & "\" & invoice.pInvoiceNo & ".txt") Then
 
             'MkDir(FileLocation)
-            File.Create(FileLocation).Dispose()
+            File.Create(FileLocation & "\" & invoice.pInvoiceNo & ".txt").Dispose()
+        Else
+
 
         End If
 
         Try
 
-            Dim SW As New System.IO.StreamWriter(FileLocation, True)
+            Dim SW As StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(FileLocation, True)
 
             For Each _property In GetType(Invoice).GetProperties
 
-                SW.Write(_property.Name.ToString & ": ")
+                SW.Write(_property.Name.ToString() & ": ")
                 SW.WriteLine(_property.GetValue(invoice, Nothing))
 
             Next
 
-            SW.WriteLine("<--------------- INVOICE ITEMS --------------->")
+            'SW.WriteLine("<--------------- INVOICE ITEMS --------------->")
 
-            For i As Integer = 0 To items.Count - 1
+            'For i As Integer = 0 To items.Count - 1
 
-                SW.WriteLine("*********** Item " & i.ToString & " ***********")
+            '    SW.WriteLine("*********** Item " & i.ToString & " ***********")
 
-                For Each _property In GetType(InvoiceItem).GetProperties
+            '    For Each _property In GetType(InvoiceItem).GetProperties
 
-                    SW.Write(_property.Name.ToString & ": ")
-                    SW.WriteLine(_property.GetValue(items(i), Nothing))
+            '        SW.Write(_property.Name.ToString & ": ")
+            '        SW.WriteLine(_property.GetValue(items(i), Nothing))
 
-                Next
+            '    Next
 
-            Next
+            'Next
 
             SW.WriteLine("######################### END OF INVOICE " & invoice.pInvoiceNo & " #########################")
 
 
             SW.Close()
-            MsgBox("Invoice " & invoice.pInvoiceNo & " Sucessfully Logged to File " & vbCrLf & FileLocation, MsgBoxStyle.Information, "Invoice Logged ")
+            Main.ListBox1.Items.Add("Invoice " & invoice.pInvoiceNo & " Sucessfully Logged to File " & vbCrLf & FileLocation)
 
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Error Writing to File")
@@ -205,9 +206,9 @@ Public Class CreateInvoice
 
         End If
 
-        Try
+        'Try
 
-            SaveDialog.CreatePrompt = False
+        SaveDialog.CreatePrompt = False
             SaveDialog.OverwritePrompt = True
             SaveDialog.FileName = FileName
             SaveDialog.DefaultExt = "bin"
@@ -222,29 +223,115 @@ Public Class CreateInvoice
                 Dim fs As FileStream = New FileStream(FileLocation, FileMode.OpenOrCreate)
                 Dim bw As New BinaryWriter(fs)
 
-                'Loop through all the properties in Invoice Class and output to Binary File
-                For Each _property In GetType(Invoice).GetProperties()
+            'Loop through all the properties in Invoice Class and output to Binary File
+            For Each _property In GetType(Invoice).GetProperties()
 
-                    bw.Write(_property.Name)
-                    bw.Write(_property.GetValue(invoice, Nothing))
+                bw.Write(_property.Name)
+                bw.Write(_property.GetValue(invoice, Nothing))
 
-                Next
+            Next
 
-                fs.Close()
+            fs.Close()
                 bw.Close()
 
                 MsgBox("Invoice " & invoice.pInvoiceNo & " Successfully Saved! ", MsgBoxStyle.Information, "Saved")
 
             End If
 
-        Catch ex As Exception
-            MsgBox("Somthing went wrong while trying to save the invoice to file." & vbCrLf & "You can try to amend this error in:" & Location & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Somthing went wrong ")
+        'Catch ex As Exception
+        'MsgBox("Somthing went wrong while trying to save the invoice to file." & vbCrLf & "You can try to amend this error in:" & Location & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Somthing went wrong ")
 
-        Finally
+        'Finally
 
-        End Try
+        'End Try
 
     End Sub
+
+    Public Function readLastInvoiceFromFile(ByVal FolderLocation As String)
+
+        Main.ListBox1.Items.Clear()
+        Dim invoice As Invoice = New Invoice
+        Dim files = My.Computer.FileSystem.GetFiles(FolderLocation, FileIO.SearchOption.SearchTopLevelOnly, "*.bin")
+
+        For Each file As String In files
+
+            Dim fs As FileStream = New FileStream(file, FileMode.Open)
+            Dim br As BinaryReader = New BinaryReader(fs)
+            Dim line As String = ""
+            Dim line2 As String = ""
+
+            Main.ListBox1.Items.Add("Found invoice file " & file.ToString)
+
+            For Each _property In GetType(Invoice).GetProperties()
+
+                line = br.ReadString()
+                line2 = br.ReadString()
+                _property.SetValue(invoice, line2, Nothing)
+                Main.ListBox1.Items.Add(line & ": " & line2)
+
+            Next
+
+            fs.Close()
+            br.Close()
+
+            Main.ListBox1.Items.Add("")
+
+        Next
+
+        Return invoice
+
+    End Function
+
+    Private Function readInvoiceFromFile(ByVal FolderLocation As String, ByVal FileName As String)
+
+        Dim invoice As Invoice = New Invoice
+        Dim FilePath As String
+
+        FilePath = Path.Combine(FolderLocation, FileName)
+
+        If System.IO.File.Exists(FilePath) Then
+
+            Try
+                Dim fs As FileStream = New FileStream(FilePath, FileMode.Open)
+                Dim br As BinaryReader = New BinaryReader(fs)
+                Dim line As String = ""
+                Dim line2 As String = ""
+
+                Main.ListBox1.ForeColor = Color.Green
+                Main.ListBox1.Items.Add("Found invoice file " & FilePath)
+                Main.ListBox1.ForeColor = Color.Black
+
+                For Each _property In GetType(Invoice).GetProperties()
+
+                    line = br.ReadString()
+                    line2 = br.ReadString()
+                    _property.SetValue(invoice, line2, Nothing)
+                    Main.ListBox1.Items.Add(line & ": " & line2)
+
+                Next
+
+                Main.ListBox1.Items.Add("")
+
+                fs.Close()
+                br.Close()
+
+                Return invoice
+
+            Catch ex As Exception
+                MsgBox("An error occured reading the file from directory: " & FilePath & ". " & vbCrLf & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "IO Error")
+            Finally
+                Main.ListBox1.ForeColor = Color.Red
+                Main.ListBox1.Items.Add("An error occured reading the file: " & FilePath)
+                Main.ListBox1.ForeColor = Color.Black
+            End Try
+
+        Else
+            MsgBox("The invoice file at: " & FilePath & " Could not be found " & vbCrLf & "Make sure the file exists and is not corrupt ", MsgBoxStyle.Exclamation, "File not Found")
+        End If
+
+        Return Nothing
+
+    End Function
 
     Private Function checkFormData() As String
 
