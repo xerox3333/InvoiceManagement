@@ -22,6 +22,7 @@ Partial Class Main
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Main))
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.Button1 = New System.Windows.Forms.Button()
@@ -194,7 +195,7 @@ Partial Class Main
         Me.ListBox1.Location = New System.Drawing.Point(0, 500)
         Me.ListBox1.Name = "ListBox1"
         Me.ListBox1.ScrollAlwaysVisible = True
-        Me.ListBox1.Size = New System.Drawing.Size(883, 93)
+        Me.ListBox1.Size = New System.Drawing.Size(886, 93)
         Me.ListBox1.TabIndex = 0
         Me.ListBox1.TabStop = False
         '
@@ -203,7 +204,7 @@ Partial Class Main
         Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label1.AutoSize = True
         Me.Label1.ForeColor = System.Drawing.SystemColors.ButtonShadow
-        Me.Label1.Location = New System.Drawing.Point(730, 564)
+        Me.Label1.Location = New System.Drawing.Point(733, 564)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(156, 13)
         Me.Label1.TabIndex = 0
@@ -308,9 +309,9 @@ Partial Class Main
         Me.ClientSize = New System.Drawing.Size(1087, 632)
         Me.Controls.Add(Me.SplitContainer1)
         Me.Controls.Add(Me.MenuStrip1)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "Main"
-        Me.ShowIcon = False
         Me.Text = "Invoice Manager v0.0.1  |  Main Menu"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.SplitContainer1.Panel1.ResumeLayout(False)

@@ -22,11 +22,18 @@ Partial Class ViewInvoice
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.ListBox1 = New System.Windows.Forms.ListBox()
+        Me.dateHeader = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.invoiceNoHeader = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.customerNoHeader = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.totalHeader = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.lstInvoices = New System.Windows.Forms.ListView()
+        Me.purchaseNoHeader = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.commentsHeader = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.OpenToolStripButton = New System.Windows.Forms.ToolStripButton()
         Me.SaveAsToolStripButton = New System.Windows.Forms.ToolStripButton()
         Me.PrintToolStripButton = New System.Windows.Forms.ToolStripButton()
+        Me.ReloadToolStripButton = New System.Windows.Forms.ToolStripButton()
         Me.toolStripSeparator = New System.Windows.Forms.ToolStripSeparator()
         Me.CopyToolStripButton = New System.Windows.Forms.ToolStripButton()
         Me.PasteToolStripButton = New System.Windows.Forms.ToolStripButton()
@@ -36,14 +43,51 @@ Partial Class ViewInvoice
         Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
-        'ListBox1
+        'dateHeader
         '
-        Me.ListBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ListBox1.FormattingEnabled = True
-        Me.ListBox1.Location = New System.Drawing.Point(0, 0)
-        Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.Size = New System.Drawing.Size(684, 411)
-        Me.ListBox1.TabIndex = 0
+        Me.dateHeader.Text = "Date"
+        Me.dateHeader.Width = 100
+        '
+        'invoiceNoHeader
+        '
+        Me.invoiceNoHeader.Text = "Invoice No"
+        Me.invoiceNoHeader.Width = 100
+        '
+        'customerNoHeader
+        '
+        Me.customerNoHeader.Text = "Customer No"
+        Me.customerNoHeader.Width = 100
+        '
+        'totalHeader
+        '
+        Me.totalHeader.Text = "Total"
+        Me.totalHeader.Width = 100
+        '
+        'lstInvoices
+        '
+        Me.lstInvoices.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.invoiceNoHeader, Me.purchaseNoHeader, Me.customerNoHeader, Me.dateHeader, Me.totalHeader, Me.commentsHeader})
+        Me.lstInvoices.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lstInvoices.FullRowSelect = True
+        Me.lstInvoices.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
+        Me.lstInvoices.HideSelection = False
+        Me.lstInvoices.Location = New System.Drawing.Point(0, 39)
+        Me.lstInvoices.MultiSelect = False
+        Me.lstInvoices.Name = "lstInvoices"
+        Me.lstInvoices.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.lstInvoices.Size = New System.Drawing.Size(784, 422)
+        Me.lstInvoices.TabIndex = 7
+        Me.lstInvoices.UseCompatibleStateImageBehavior = False
+        Me.lstInvoices.View = System.Windows.Forms.View.Details
+        '
+        'purchaseNoHeader
+        '
+        Me.purchaseNoHeader.Text = "Puchase No"
+        Me.purchaseNoHeader.Width = 76
+        '
+        'commentsHeader
+        '
+        Me.commentsHeader.Text = "Comments"
+        Me.commentsHeader.Width = 93
         '
         'ToolStrip1
         '
@@ -52,11 +96,11 @@ Partial Class ViewInvoice
         Me.ToolStrip1.Font = New System.Drawing.Font("Arial Narrow", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
         Me.ToolStrip1.ImageScalingSize = New System.Drawing.Size(32, 32)
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenToolStripButton, Me.SaveAsToolStripButton, Me.PrintToolStripButton, Me.toolStripSeparator, Me.CopyToolStripButton, Me.PasteToolStripButton, Me.toolStripSeparator2, Me.CloseToolStripButton, Me.HelpToolStripButton})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenToolStripButton, Me.SaveAsToolStripButton, Me.PrintToolStripButton, Me.ReloadToolStripButton, Me.toolStripSeparator, Me.CopyToolStripButton, Me.PasteToolStripButton, Me.toolStripSeparator2, Me.CloseToolStripButton, Me.HelpToolStripButton})
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip1.Name = "ToolStrip1"
         Me.ToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.ToolStrip1.Size = New System.Drawing.Size(684, 39)
+        Me.ToolStrip1.Size = New System.Drawing.Size(784, 39)
         Me.ToolStrip1.TabIndex = 6
         Me.ToolStrip1.Text = "ToolStrip1"
         '
@@ -83,6 +127,14 @@ Partial Class ViewInvoice
         Me.PrintToolStripButton.Name = "PrintToolStripButton"
         Me.PrintToolStripButton.Size = New System.Drawing.Size(69, 36)
         Me.PrintToolStripButton.Text = "&Print"
+        '
+        'ReloadToolStripButton
+        '
+        Me.ReloadToolStripButton.Image = Global.Invoice_Management.My.Resources.Resources.refreshIcon
+        Me.ReloadToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ReloadToolStripButton.Name = "ReloadToolStripButton"
+        Me.ReloadToolStripButton.Size = New System.Drawing.Size(81, 36)
+        Me.ReloadToolStripButton.Text = "Reload"
         '
         'toolStripSeparator
         '
@@ -133,9 +185,9 @@ Partial Class ViewInvoice
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.ClientSize = New System.Drawing.Size(684, 411)
+        Me.ClientSize = New System.Drawing.Size(784, 461)
+        Me.Controls.Add(Me.lstInvoices)
         Me.Controls.Add(Me.ToolStrip1)
-        Me.Controls.Add(Me.ListBox1)
         Me.Name = "ViewInvoice"
         Me.ShowIcon = False
         Me.Text = "View Invoice"
@@ -145,7 +197,6 @@ Partial Class ViewInvoice
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents ListBox1 As System.Windows.Forms.ListBox
     Friend WithEvents ToolStrip1 As System.Windows.Forms.ToolStrip
     Friend WithEvents OpenToolStripButton As System.Windows.Forms.ToolStripButton
     Friend WithEvents SaveAsToolStripButton As System.Windows.Forms.ToolStripButton
@@ -156,4 +207,12 @@ Partial Class ViewInvoice
     Friend WithEvents toolStripSeparator2 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents CloseToolStripButton As System.Windows.Forms.ToolStripButton
     Friend WithEvents HelpToolStripButton As System.Windows.Forms.ToolStripButton
+    Friend WithEvents dateHeader As ColumnHeader
+    Friend WithEvents invoiceNoHeader As ColumnHeader
+    Friend WithEvents customerNoHeader As ColumnHeader
+    Friend WithEvents totalHeader As ColumnHeader
+    Friend WithEvents lstInvoices As ListView
+    Friend WithEvents commentsHeader As ColumnHeader
+    Friend WithEvents purchaseNoHeader As ColumnHeader
+    Friend WithEvents ReloadToolStripButton As ToolStripButton
 End Class

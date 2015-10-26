@@ -1,6 +1,5 @@
 ﻿Imports PdfSharp.Drawing
 Imports PdfSharp.Pdf
-'Imports AcroPDFLib
 
 Public Class PDF
 
@@ -50,10 +49,10 @@ Public Class PDF
 
         g.DrawRectangle(XBrushes.LightGray, New XRect(35, 155, 100, 80)) 'Customer Details background
         g.DrawString("Customer Info", detailFont, XBrushes.WhiteSmoke, New XRect(40, 165, 100, 0))
-        g.DrawString(invoice.pBillingName, detailFont, XBrushes.Black, New XRect(140, 170, 100, 0))
-        g.DrawString(invoice.pBillingAddress1, detailFont, XBrushes.Black, New XRect(140, 190, 100, 0))
-        g.DrawString(invoice.pBillingCity, detailFont, XBrushes.Black, New XRect(140, 210, 100, 0))
-        g.DrawString(invoice.pBillingPostcode, detailFont, XBrushes.Black, New XRect(140, 230, 100, 0))
+        g.DrawString(invoice.pBillTo, detailFont, XBrushes.Black, New XRect(140, 170, 100, 0))
+        'g.DrawString(invoice.pBillingAddress1, detailFont, XBrushes.Black, New XRect(140, 190, 100, 0))
+        'g.DrawString(invoice.pBillingCity, detailFont, XBrushes.Black, New XRect(140, 210, 100, 0))
+        'g.DrawString(invoice.pBillingPostcode, detailFont, XBrushes.Black, New XRect(140, 230, 100, 0))
 
         g.DrawRectangle(XBrushes.LightGray, New XRect(275, 155, 100, 80)) 'Invoice Details background
         g.DrawString("Invoice Info ", detailFont, XBrushes.WhiteSmoke, New XRect(280, 165, 100, 0))

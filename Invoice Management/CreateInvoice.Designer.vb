@@ -22,6 +22,21 @@ Partial Class CreateInvoice
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.ItemsGrid = New System.Windows.Forms.DataGridView()
+        Me.Item = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Qty = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Unit = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Unit_Price = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Price = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.Label20 = New System.Windows.Forms.Label()
+        Me.btnAddItem = New System.Windows.Forms.Button()
+        Me.txtNotes = New System.Windows.Forms.TextBox()
+        Me.txtTotal = New System.Windows.Forms.TextBox()
+        Me.txtTax = New System.Windows.Forms.TextBox()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.txtSubtotal = New System.Windows.Forms.TextBox()
+        Me.Label16 = New System.Windows.Forms.Label()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.NewToolStripButton = New System.Windows.Forms.ToolStripButton()
         Me.SaveAsToolStripButton = New System.Windows.Forms.ToolStripButton()
@@ -33,57 +48,206 @@ Partial Class CreateInvoice
         Me.toolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.CloseToolStripButton = New System.Windows.Forms.ToolStripButton()
         Me.HelpToolStripButton = New System.Windows.Forms.ToolStripButton()
-        Me.txtInvoiceNo = New System.Windows.Forms.TextBox()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.txtPurchaseNo = New System.Windows.Forms.TextBox()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.cboTerms = New System.Windows.Forms.ComboBox()
-        Me.cboTermsLength = New System.Windows.Forms.NumericUpDown()
-        Me.txtCreatedBy = New System.Windows.Forms.TextBox()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.ItemsGrid = New System.Windows.Forms.DataGridView()
-        Me.Item = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Qty = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Unit = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Unit_Price = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Price = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.txtDate = New System.Windows.Forms.DateTimePicker()
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.Label18 = New System.Windows.Forms.Label()
-        Me.txtEstimateNo = New System.Windows.Forms.TextBox()
-        Me.Label12 = New System.Windows.Forms.Label()
-        Me.txtBillToPostcode = New System.Windows.Forms.TextBox()
-        Me.Label11 = New System.Windows.Forms.Label()
-        Me.txtBillToCity = New System.Windows.Forms.TextBox()
+        Me.TabControl1 = New System.Windows.Forms.TabControl()
+        Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.cboTax = New System.Windows.Forms.ComboBox()
         Me.Label10 = New System.Windows.Forms.Label()
-        Me.txtBillToAddress = New System.Windows.Forms.TextBox()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.txtBillToName = New System.Windows.Forms.TextBox()
-        Me.chkSameAsBill = New System.Windows.Forms.CheckBox()
-        Me.Label13 = New System.Windows.Forms.Label()
-        Me.txtShipToPostcode = New System.Windows.Forms.TextBox()
-        Me.Label14 = New System.Windows.Forms.Label()
-        Me.txtShipToCity = New System.Windows.Forms.TextBox()
-        Me.Label15 = New System.Windows.Forms.Label()
-        Me.txtShipToAddress = New System.Windows.Forms.TextBox()
-        Me.Label16 = New System.Windows.Forms.Label()
-        Me.txtShipToName = New System.Windows.Forms.TextBox()
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
-        Me.Label17 = New System.Windows.Forms.Label()
-        Me.Label7 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.txtPurchaseNo = New System.Windows.Forms.TextBox()
+        Me.btnEditCustomer = New System.Windows.Forms.Button()
+        Me.txtBillTo = New System.Windows.Forms.TextBox()
+        Me.cboCustomer = New System.Windows.Forms.ComboBox()
+        Me.btnAddCustomer = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.txtCutomerID = New System.Windows.Forms.TextBox()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.Label19 = New System.Windows.Forms.Label()
-        Me.lblTotal = New System.Windows.Forms.Label()
-        Me.ToolStrip1.SuspendLayout()
-        CType(Me.cboTermsLength, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.TextBox12 = New System.Windows.Forms.TextBox()
+        Me.ComboBox5 = New System.Windows.Forms.ComboBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.chkSameAsBill = New System.Windows.Forms.CheckBox()
+        Me.ComboBox4 = New System.Windows.Forms.ComboBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.txtShipTo = New System.Windows.Forms.TextBox()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.btnCreateFrom = New System.Windows.Forms.Button()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.cboCreateFrom = New System.Windows.Forms.ComboBox()
+        Me.txtAuthor = New System.Windows.Forms.TextBox()
+        Me.txtInvoiceNo = New System.Windows.Forms.TextBox()
+        Me.cboDate = New System.Windows.Forms.DateTimePicker()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.Label21 = New System.Windows.Forms.Label()
+        Me.cboTermsLength = New System.Windows.Forms.NumericUpDown()
+        Me.Label22 = New System.Windows.Forms.Label()
+        Me.cboTerms = New System.Windows.Forms.ComboBox()
+        Me.Label23 = New System.Windows.Forms.Label()
+        Me.TabControl2 = New System.Windows.Forms.TabControl()
+        Me.btnRemoveItem = New System.Windows.Forms.Button()
+        Me.btnAddDiscount = New System.Windows.Forms.Button()
+        Me.TabControl3 = New System.Windows.Forms.TabControl()
+        Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.txtComments = New System.Windows.Forms.TextBox()
         CType(Me.ItemsGrid, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox1.SuspendLayout()
-        Me.GroupBox2.SuspendLayout()
+        Me.ToolStrip1.SuspendLayout()
+        Me.TabControl1.SuspendLayout()
+        Me.TabPage1.SuspendLayout()
+        Me.TabPage2.SuspendLayout()
+        Me.TabPage3.SuspendLayout()
+        CType(Me.cboTermsLength, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabControl2.SuspendLayout()
+        Me.TabControl3.SuspendLayout()
+        Me.TabPage4.SuspendLayout()
+        Me.TabPage5.SuspendLayout()
         Me.SuspendLayout()
+        '
+        'ItemsGrid
+        '
+        Me.ItemsGrid.AllowUserToResizeRows = False
+        Me.ItemsGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.ItemsGrid.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Item, Me.Qty, Me.Unit, Me.Unit_Price, Me.Price})
+        Me.ItemsGrid.Location = New System.Drawing.Point(12, 313)
+        Me.ItemsGrid.Name = "ItemsGrid"
+        Me.ItemsGrid.Size = New System.Drawing.Size(843, 168)
+        Me.ItemsGrid.TabIndex = 15
+        '
+        'Item
+        '
+        Me.Item.HeaderText = "Item"
+        Me.Item.MinimumWidth = 500
+        Me.Item.Name = "Item"
+        Me.Item.Width = 500
+        '
+        'Qty
+        '
+        Me.Qty.HeaderText = "Qty"
+        Me.Qty.MinimumWidth = 75
+        Me.Qty.Name = "Qty"
+        Me.Qty.Width = 75
+        '
+        'Unit
+        '
+        Me.Unit.HeaderText = "Unit"
+        Me.Unit.MinimumWidth = 75
+        Me.Unit.Name = "Unit"
+        Me.Unit.Width = 75
+        '
+        'Unit_Price
+        '
+        Me.Unit_Price.HeaderText = "Unit Price"
+        Me.Unit_Price.MinimumWidth = 90
+        Me.Unit_Price.Name = "Unit_Price"
+        Me.Unit_Price.Width = 90
+        '
+        'Price
+        '
+        Me.Price.HeaderText = "Price"
+        Me.Price.MinimumWidth = 90
+        Me.Price.Name = "Price"
+        Me.Price.Width = 90
+        '
+        'Label19
+        '
+        Me.Label19.AutoSize = True
+        Me.Label19.Font = New System.Drawing.Font("Calibri", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label19.ForeColor = System.Drawing.Color.DodgerBlue
+        Me.Label19.Location = New System.Drawing.Point(483, 608)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(90, 18)
+        Me.Label19.TabIndex = 141
+        Me.Label19.Text = "Invoice Total:"
+        '
+        'Label20
+        '
+        Me.Label20.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label20.AutoSize = True
+        Me.Label20.BackColor = System.Drawing.Color.LightSteelBlue
+        Me.Label20.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label20.Location = New System.Drawing.Point(7, 43)
+        Me.Label20.Name = "Label20"
+        Me.Label20.Padding = New System.Windows.Forms.Padding(0, 0, 750, 0)
+        Me.Label20.Size = New System.Drawing.Size(932, 25)
+        Me.Label20.TabIndex = 143
+        Me.Label20.Text = "Create An Invoice"
+        '
+        'btnAddItem
+        '
+        Me.btnAddItem.Font = New System.Drawing.Font("Calibri", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnAddItem.Location = New System.Drawing.Point(12, 487)
+        Me.btnAddItem.Name = "btnAddItem"
+        Me.btnAddItem.Size = New System.Drawing.Size(98, 27)
+        Me.btnAddItem.TabIndex = 166
+        Me.btnAddItem.Text = "Add Item"
+        Me.btnAddItem.UseVisualStyleBackColor = True
+        '
+        'txtNotes
+        '
+        Me.txtNotes.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.txtNotes.Location = New System.Drawing.Point(3, 3)
+        Me.txtNotes.Multiline = True
+        Me.txtNotes.Name = "txtNotes"
+        Me.txtNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.txtNotes.Size = New System.Drawing.Size(338, 68)
+        Me.txtNotes.TabIndex = 16
+        '
+        'txtTotal
+        '
+        Me.txtTotal.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTotal.HideSelection = False
+        Me.txtTotal.Location = New System.Drawing.Point(658, 608)
+        Me.txtTotal.Name = "txtTotal"
+        Me.txtTotal.ReadOnly = True
+        Me.txtTotal.Size = New System.Drawing.Size(153, 20)
+        Me.txtTotal.TabIndex = 61
+        Me.txtTotal.Text = "0.00"
+        '
+        'txtTax
+        '
+        Me.txtTax.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTax.HideSelection = False
+        Me.txtTax.Location = New System.Drawing.Point(658, 568)
+        Me.txtTax.Name = "txtTax"
+        Me.txtTax.ReadOnly = True
+        Me.txtTax.Size = New System.Drawing.Size(153, 20)
+        Me.txtTax.TabIndex = 172
+        Me.txtTax.Text = "0.00"
+        '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.Font = New System.Drawing.Font("Calibri", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label15.ForeColor = System.Drawing.Color.DodgerBlue
+        Me.Label15.Location = New System.Drawing.Point(483, 568)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(67, 18)
+        Me.Label15.TabIndex = 173
+        Me.Label15.Text = "Sales Tax:"
+        '
+        'txtSubtotal
+        '
+        Me.txtSubtotal.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtSubtotal.HideSelection = False
+        Me.txtSubtotal.Location = New System.Drawing.Point(658, 542)
+        Me.txtSubtotal.Name = "txtSubtotal"
+        Me.txtSubtotal.ReadOnly = True
+        Me.txtSubtotal.Size = New System.Drawing.Size(153, 20)
+        Me.txtSubtotal.TabIndex = 174
+        Me.txtSubtotal.Text = "0.00"
+        '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Font = New System.Drawing.Font("Calibri", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label16.ForeColor = System.Drawing.Color.DodgerBlue
+        Me.Label16.Location = New System.Drawing.Point(483, 542)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(65, 18)
+        Me.Label16.TabIndex = 175
+        Me.Label16.Text = "SubTotal:"
         '
         'ToolStrip1
         '
@@ -96,7 +260,7 @@ Partial Class CreateInvoice
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip1.Name = "ToolStrip1"
         Me.ToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.ToolStrip1.Size = New System.Drawing.Size(937, 39)
+        Me.ToolStrip1.Size = New System.Drawing.Size(863, 39)
         Me.ToolStrip1.TabIndex = 0
         Me.ToolStrip1.Text = "CreateInvoiceToolStrip"
         '
@@ -176,465 +340,457 @@ Partial Class CreateInvoice
         Me.HelpToolStripButton.Size = New System.Drawing.Size(68, 36)
         Me.HelpToolStripButton.Text = "He&lp"
         '
-        'txtInvoiceNo
+        'TabControl1
         '
-        Me.txtInvoiceNo.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtInvoiceNo.HideSelection = False
-        Me.txtInvoiceNo.Location = New System.Drawing.Point(126, 38)
-        Me.txtInvoiceNo.Name = "txtInvoiceNo"
-        Me.txtInvoiceNo.Size = New System.Drawing.Size(130, 20)
-        Me.txtInvoiceNo.TabIndex = 1
+        Me.TabControl1.Controls.Add(Me.TabPage1)
+        Me.TabControl1.Controls.Add(Me.TabPage2)
+        Me.TabControl1.Location = New System.Drawing.Point(12, 86)
+        Me.TabControl1.Name = "TabControl1"
+        Me.TabControl1.SelectedIndex = 0
+        Me.TabControl1.Size = New System.Drawing.Size(480, 221)
+        Me.TabControl1.TabIndex = 176
         '
-        'Label2
+        'TabPage1
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(32, 38)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(67, 14)
-        Me.Label2.TabIndex = 10
-        Me.Label2.Text = "Invoice No:"
+        Me.TabPage1.Controls.Add(Me.cboTax)
+        Me.TabPage1.Controls.Add(Me.Label10)
+        Me.TabPage1.Controls.Add(Me.Label3)
+        Me.TabPage1.Controls.Add(Me.txtPurchaseNo)
+        Me.TabPage1.Controls.Add(Me.btnEditCustomer)
+        Me.TabPage1.Controls.Add(Me.txtBillTo)
+        Me.TabPage1.Controls.Add(Me.cboCustomer)
+        Me.TabPage1.Controls.Add(Me.btnAddCustomer)
+        Me.TabPage1.Controls.Add(Me.Label1)
+        Me.TabPage1.Controls.Add(Me.Label9)
+        Me.TabPage1.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage1.Name = "TabPage1"
+        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage1.Size = New System.Drawing.Size(472, 195)
+        Me.TabPage1.TabIndex = 0
+        Me.TabPage1.Text = "Billing"
+        Me.TabPage1.UseVisualStyleBackColor = True
         '
-        'txtPurchaseNo
+        'cboTax
         '
-        Me.txtPurchaseNo.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtPurchaseNo.HideSelection = False
-        Me.txtPurchaseNo.Location = New System.Drawing.Point(126, 91)
-        Me.txtPurchaseNo.Name = "txtPurchaseNo"
-        Me.txtPurchaseNo.Size = New System.Drawing.Size(130, 20)
-        Me.txtPurchaseNo.TabIndex = 3
+        Me.cboTax.FormattingEnabled = True
+        Me.cboTax.Items.AddRange(New Object() {"Default", "Exempt"})
+        Me.cboTax.Location = New System.Drawing.Point(105, 162)
+        Me.cboTax.Name = "cboTax"
+        Me.cboTax.Size = New System.Drawing.Size(160, 21)
+        Me.cboTax.TabIndex = 183
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.Location = New System.Drawing.Point(6, 164)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(27, 14)
+        Me.Label10.TabIndex = 182
+        Me.Label10.Text = "Tax:"
         '
         'Label3
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(32, 91)
+        Me.Label3.Location = New System.Drawing.Point(6, 139)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(77, 14)
-        Me.Label3.TabIndex = 12
-        Me.Label3.Text = "Purchase No:"
+        Me.Label3.Size = New System.Drawing.Size(70, 14)
+        Me.Label3.TabIndex = 181
+        Me.Label3.Text = "PO Number:"
+        '
+        'txtPurchaseNo
+        '
+        Me.txtPurchaseNo.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtPurchaseNo.HideSelection = False
+        Me.txtPurchaseNo.Location = New System.Drawing.Point(105, 136)
+        Me.txtPurchaseNo.Name = "txtPurchaseNo"
+        Me.txtPurchaseNo.Size = New System.Drawing.Size(160, 20)
+        Me.txtPurchaseNo.TabIndex = 180
+        '
+        'btnEditCustomer
+        '
+        Me.btnEditCustomer.Font = New System.Drawing.Font("Calibri", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnEditCustomer.Location = New System.Drawing.Point(398, 20)
+        Me.btnEditCustomer.Name = "btnEditCustomer"
+        Me.btnEditCustomer.Size = New System.Drawing.Size(38, 23)
+        Me.btnEditCustomer.TabIndex = 179
+        Me.btnEditCustomer.Text = "Edit Customer"
+        Me.btnEditCustomer.UseVisualStyleBackColor = True
+        '
+        'txtBillTo
+        '
+        Me.txtBillTo.Location = New System.Drawing.Point(105, 49)
+        Me.txtBillTo.Multiline = True
+        Me.txtBillTo.Name = "txtBillTo"
+        Me.txtBillTo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.txtBillTo.Size = New System.Drawing.Size(243, 83)
+        Me.txtBillTo.TabIndex = 178
+        '
+        'cboCustomer
+        '
+        Me.cboCustomer.FormattingEnabled = True
+        Me.cboCustomer.Location = New System.Drawing.Point(105, 22)
+        Me.cboCustomer.Name = "cboCustomer"
+        Me.cboCustomer.Size = New System.Drawing.Size(243, 21)
+        Me.cboCustomer.TabIndex = 177
+        '
+        'btnAddCustomer
+        '
+        Me.btnAddCustomer.Font = New System.Drawing.Font("Calibri", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnAddCustomer.Location = New System.Drawing.Point(354, 20)
+        Me.btnAddCustomer.Name = "btnAddCustomer"
+        Me.btnAddCustomer.Size = New System.Drawing.Size(38, 23)
+        Me.btnAddCustomer.TabIndex = 176
+        Me.btnAddCustomer.Text = "Add Customer"
+        Me.btnAddCustomer.UseVisualStyleBackColor = True
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Location = New System.Drawing.Point(6, 25)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(61, 14)
+        Me.Label1.TabIndex = 171
+        Me.Label1.Text = "Customer:"
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.Location = New System.Drawing.Point(6, 52)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(44, 14)
+        Me.Label9.TabIndex = 172
+        Me.Label9.Text = "Bill To:"
+        '
+        'TabPage2
+        '
+        Me.TabPage2.Controls.Add(Me.TextBox12)
+        Me.TabPage2.Controls.Add(Me.ComboBox5)
+        Me.TabPage2.Controls.Add(Me.Label6)
+        Me.TabPage2.Controls.Add(Me.chkSameAsBill)
+        Me.TabPage2.Controls.Add(Me.ComboBox4)
+        Me.TabPage2.Controls.Add(Me.Label2)
+        Me.TabPage2.Controls.Add(Me.Label4)
+        Me.TabPage2.Controls.Add(Me.TextBox3)
+        Me.TabPage2.Controls.Add(Me.txtShipTo)
+        Me.TabPage2.Controls.Add(Me.Label5)
+        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage2.Name = "TabPage2"
+        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage2.Size = New System.Drawing.Size(472, 195)
+        Me.TabPage2.TabIndex = 1
+        Me.TabPage2.Text = "Shipping"
+        Me.TabPage2.UseVisualStyleBackColor = True
+        '
+        'TextBox12
+        '
+        Me.TextBox12.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox12.HideSelection = False
+        Me.TextBox12.Location = New System.Drawing.Point(105, 162)
+        Me.TextBox12.Name = "TextBox12"
+        Me.TextBox12.Size = New System.Drawing.Size(67, 20)
+        Me.TextBox12.TabIndex = 193
+        '
+        'ComboBox5
+        '
+        Me.ComboBox5.FormattingEnabled = True
+        Me.ComboBox5.Items.AddRange(New Object() {"Default", "Exempt"})
+        Me.ComboBox5.Location = New System.Drawing.Point(178, 162)
+        Me.ComboBox5.Name = "ComboBox5"
+        Me.ComboBox5.Size = New System.Drawing.Size(87, 21)
+        Me.ComboBox5.TabIndex = 192
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Location = New System.Drawing.Point(6, 165)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(84, 14)
+        Me.Label6.TabIndex = 191
+        Me.Label6.Text = "Shipping Cost:"
+        '
+        'chkSameAsBill
+        '
+        Me.chkSameAsBill.AutoSize = True
+        Me.chkSameAsBill.Location = New System.Drawing.Point(354, 23)
+        Me.chkSameAsBill.Name = "chkSameAsBill"
+        Me.chkSameAsBill.Size = New System.Drawing.Size(96, 17)
+        Me.chkSameAsBill.TabIndex = 190
+        Me.chkSameAsBill.Text = "Same as billing"
+        Me.chkSameAsBill.UseVisualStyleBackColor = True
+        '
+        'ComboBox4
+        '
+        Me.ComboBox4.FormattingEnabled = True
+        Me.ComboBox4.Items.AddRange(New Object() {"Default", "Exempt"})
+        Me.ComboBox4.Location = New System.Drawing.Point(105, 136)
+        Me.ComboBox4.Name = "ComboBox4"
+        Me.ComboBox4.Size = New System.Drawing.Size(160, 21)
+        Me.ComboBox4.TabIndex = 189
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Location = New System.Drawing.Point(6, 138)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(49, 14)
+        Me.Label2.TabIndex = 188
+        Me.Label2.Text = "Ship By:"
         '
         'Label4
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(32, 116)
+        Me.Label4.Location = New System.Drawing.Point(6, 113)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(36, 14)
-        Me.Label4.TabIndex = 14
-        Me.Label4.Text = "Date:"
+        Me.Label4.Size = New System.Drawing.Size(75, 14)
+        Me.Label4.TabIndex = 187
+        Me.Label4.Text = "Tracking Ref:"
+        '
+        'TextBox3
+        '
+        Me.TextBox3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox3.HideSelection = False
+        Me.TextBox3.Location = New System.Drawing.Point(105, 110)
+        Me.TextBox3.Name = "TextBox3"
+        Me.TextBox3.Size = New System.Drawing.Size(160, 20)
+        Me.TextBox3.TabIndex = 186
+        '
+        'txtShipTo
+        '
+        Me.txtShipTo.Location = New System.Drawing.Point(105, 23)
+        Me.txtShipTo.Multiline = True
+        Me.txtShipTo.Name = "txtShipTo"
+        Me.txtShipTo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.txtShipTo.Size = New System.Drawing.Size(243, 83)
+        Me.txtShipTo.TabIndex = 185
         '
         'Label5
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(32, 143)
+        Me.Label5.Location = New System.Drawing.Point(6, 26)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(42, 14)
-        Me.Label5.TabIndex = 16
-        Me.Label5.Text = "Terms:"
+        Me.Label5.Size = New System.Drawing.Size(49, 14)
+        Me.Label5.TabIndex = 184
+        Me.Label5.Text = "Ship To:"
+        '
+        'TabPage3
+        '
+        Me.TabPage3.Controls.Add(Me.btnCreateFrom)
+        Me.TabPage3.Controls.Add(Me.Label11)
+        Me.TabPage3.Controls.Add(Me.cboCreateFrom)
+        Me.TabPage3.Controls.Add(Me.txtAuthor)
+        Me.TabPage3.Controls.Add(Me.txtInvoiceNo)
+        Me.TabPage3.Controls.Add(Me.cboDate)
+        Me.TabPage3.Controls.Add(Me.Label12)
+        Me.TabPage3.Controls.Add(Me.Label21)
+        Me.TabPage3.Controls.Add(Me.cboTermsLength)
+        Me.TabPage3.Controls.Add(Me.Label22)
+        Me.TabPage3.Controls.Add(Me.cboTerms)
+        Me.TabPage3.Controls.Add(Me.Label23)
+        Me.TabPage3.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage3.Name = "TabPage3"
+        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage3.Size = New System.Drawing.Size(339, 191)
+        Me.TabPage3.TabIndex = 0
+        Me.TabPage3.Text = "Invoice"
+        Me.TabPage3.UseVisualStyleBackColor = True
+        '
+        'btnCreateFrom
+        '
+        Me.btnCreateFrom.Font = New System.Drawing.Font("Calibri", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCreateFrom.Location = New System.Drawing.Point(266, 20)
+        Me.btnCreateFrom.Name = "btnCreateFrom"
+        Me.btnCreateFrom.Size = New System.Drawing.Size(38, 23)
+        Me.btnCreateFrom.TabIndex = 184
+        Me.btnCreateFrom.Text = "Add Customer"
+        Me.btnCreateFrom.UseVisualStyleBackColor = True
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label11.Location = New System.Drawing.Point(7, 25)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(75, 14)
+        Me.Label11.TabIndex = 185
+        Me.Label11.Text = "Create From:"
+        '
+        'cboCreateFrom
+        '
+        Me.cboCreateFrom.FormattingEnabled = True
+        Me.cboCreateFrom.Location = New System.Drawing.Point(119, 22)
+        Me.cboCreateFrom.Name = "cboCreateFrom"
+        Me.cboCreateFrom.Size = New System.Drawing.Size(141, 21)
+        Me.cboCreateFrom.TabIndex = 184
+        '
+        'txtAuthor
+        '
+        Me.txtAuthor.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtAuthor.HideSelection = False
+        Me.txtAuthor.Location = New System.Drawing.Point(119, 152)
+        Me.txtAuthor.Name = "txtAuthor"
+        Me.txtAuthor.Size = New System.Drawing.Size(130, 20)
+        Me.txtAuthor.TabIndex = 66
+        '
+        'txtInvoiceNo
+        '
+        Me.txtInvoiceNo.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtInvoiceNo.HideSelection = False
+        Me.txtInvoiceNo.Location = New System.Drawing.Point(119, 49)
+        Me.txtInvoiceNo.Name = "txtInvoiceNo"
+        Me.txtInvoiceNo.Size = New System.Drawing.Size(185, 20)
+        Me.txtInvoiceNo.TabIndex = 61
+        '
+        'cboDate
+        '
+        Me.cboDate.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cboDate.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cboDate.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.cboDate.Location = New System.Drawing.Point(119, 98)
+        Me.cboDate.MinDate = New Date(2000, 1, 1, 0, 0, 0, 0)
+        Me.cboDate.Name = "cboDate"
+        Me.cboDate.Size = New System.Drawing.Size(185, 20)
+        Me.cboDate.TabIndex = 63
+        Me.cboDate.Value = New Date(2014, 11, 24, 0, 0, 0, 0)
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label12.Location = New System.Drawing.Point(7, 52)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(95, 14)
+        Me.Label12.TabIndex = 67
+        Me.Label12.Text = "Invoice Number:"
+        '
+        'Label21
+        '
+        Me.Label21.AutoSize = True
+        Me.Label21.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label21.Location = New System.Drawing.Point(7, 155)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(46, 14)
+        Me.Label21.TabIndex = 70
+        Me.Label21.Text = "Author:"
+        '
+        'cboTermsLength
+        '
+        Me.cboTermsLength.Font = New System.Drawing.Font("Arial Narrow", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cboTermsLength.Location = New System.Drawing.Point(264, 125)
+        Me.cboTermsLength.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
+        Me.cboTermsLength.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.cboTermsLength.Name = "cboTermsLength"
+        Me.cboTermsLength.Size = New System.Drawing.Size(40, 20)
+        Me.cboTermsLength.TabIndex = 65
+        Me.cboTermsLength.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        '
+        'Label22
+        '
+        Me.Label22.AutoSize = True
+        Me.Label22.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label22.Location = New System.Drawing.Point(6, 104)
+        Me.Label22.Name = "Label22"
+        Me.Label22.Size = New System.Drawing.Size(61, 14)
+        Me.Label22.TabIndex = 68
+        Me.Label22.Text = "Date Due:"
         '
         'cboTerms
         '
         Me.cboTerms.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cboTerms.FormattingEnabled = True
         Me.cboTerms.Items.AddRange(New Object() {"Pay in Days", "Pay in Weeks", "Pay in Months"})
-        Me.cboTerms.Location = New System.Drawing.Point(126, 143)
+        Me.cboTerms.Location = New System.Drawing.Point(119, 125)
         Me.cboTerms.Name = "cboTerms"
-        Me.cboTerms.Size = New System.Drawing.Size(112, 21)
-        Me.cboTerms.TabIndex = 5
-        '
-        'cboTermsLength
-        '
-        Me.cboTermsLength.Font = New System.Drawing.Font("Arial Narrow", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cboTermsLength.Location = New System.Drawing.Point(243, 144)
-        Me.cboTermsLength.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
-        Me.cboTermsLength.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.cboTermsLength.Name = "cboTermsLength"
-        Me.cboTermsLength.Size = New System.Drawing.Size(40, 20)
-        Me.cboTermsLength.TabIndex = 6
-        Me.cboTermsLength.Value = New Decimal(New Integer() {1, 0, 0, 0})
-        '
-        'txtCreatedBy
-        '
-        Me.txtCreatedBy.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtCreatedBy.HideSelection = False
-        Me.txtCreatedBy.Location = New System.Drawing.Point(126, 170)
-        Me.txtCreatedBy.Name = "txtCreatedBy"
-        Me.txtCreatedBy.Size = New System.Drawing.Size(130, 20)
-        Me.txtCreatedBy.TabIndex = 7
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(32, 170)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(67, 14)
-        Me.Label6.TabIndex = 58
-        Me.Label6.Text = "Created By:"
-        '
-        'ItemsGrid
-        '
-        Me.ItemsGrid.AllowUserToResizeRows = False
-        Me.ItemsGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.ItemsGrid.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Item, Me.Qty, Me.Unit, Me.Unit_Price, Me.Price})
-        Me.ItemsGrid.Location = New System.Drawing.Point(12, 363)
-        Me.ItemsGrid.Name = "ItemsGrid"
-        Me.ItemsGrid.Size = New System.Drawing.Size(909, 330)
-        Me.ItemsGrid.TabIndex = 17
-        '
-        'Item
-        '
-        Me.Item.HeaderText = "Item"
-        Me.Item.MinimumWidth = 500
-        Me.Item.Name = "Item"
-        Me.Item.Width = 500
-        '
-        'Qty
-        '
-        Me.Qty.HeaderText = "Qty"
-        Me.Qty.MinimumWidth = 75
-        Me.Qty.Name = "Qty"
-        Me.Qty.Width = 75
-        '
-        'Unit
-        '
-        Me.Unit.HeaderText = "Unit"
-        Me.Unit.MinimumWidth = 75
-        Me.Unit.Name = "Unit"
-        Me.Unit.Width = 75
-        '
-        'Unit_Price
-        '
-        Me.Unit_Price.HeaderText = "Unit Price"
-        Me.Unit_Price.MinimumWidth = 90
-        Me.Unit_Price.Name = "Unit_Price"
-        Me.Unit_Price.Width = 90
-        '
-        'Price
-        '
-        Me.Price.HeaderText = "Price"
-        Me.Price.MinimumWidth = 90
-        Me.Price.Name = "Price"
-        Me.Price.Width = 90
-        '
-        'txtDate
-        '
-        Me.txtDate.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtDate.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtDate.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.txtDate.Location = New System.Drawing.Point(126, 116)
-        Me.txtDate.MinDate = New Date(2000, 1, 1, 0, 0, 0, 0)
-        Me.txtDate.Name = "txtDate"
-        Me.txtDate.Size = New System.Drawing.Size(157, 20)
-        Me.txtDate.TabIndex = 4
-        Me.txtDate.Value = New Date(2014, 11, 24, 0, 0, 0, 0)
-        '
-        'GroupBox1
-        '
-        Me.GroupBox1.Controls.Add(Me.Label18)
-        Me.GroupBox1.Controls.Add(Me.txtEstimateNo)
-        Me.GroupBox1.Controls.Add(Me.txtCreatedBy)
-        Me.GroupBox1.Controls.Add(Me.txtDate)
-        Me.GroupBox1.Controls.Add(Me.Label2)
-        Me.GroupBox1.Controls.Add(Me.txtInvoiceNo)
-        Me.GroupBox1.Controls.Add(Me.Label3)
-        Me.GroupBox1.Controls.Add(Me.Label6)
-        Me.GroupBox1.Controls.Add(Me.txtPurchaseNo)
-        Me.GroupBox1.Controls.Add(Me.cboTermsLength)
-        Me.GroupBox1.Controls.Add(Me.Label4)
-        Me.GroupBox1.Controls.Add(Me.cboTerms)
-        Me.GroupBox1.Controls.Add(Me.Label5)
-        Me.GroupBox1.Font = New System.Drawing.Font("Calibri", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox1.Location = New System.Drawing.Point(607, 55)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(314, 205)
-        Me.GroupBox1.TabIndex = 87
-        Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Invoice Details"
-        '
-        'Label18
-        '
-        Me.Label18.AutoSize = True
-        Me.Label18.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label18.Location = New System.Drawing.Point(32, 64)
-        Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(75, 14)
-        Me.Label18.TabIndex = 60
-        Me.Label18.Text = "Estimate No:"
-        '
-        'txtEstimateNo
-        '
-        Me.txtEstimateNo.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtEstimateNo.HideSelection = False
-        Me.txtEstimateNo.Location = New System.Drawing.Point(126, 64)
-        Me.txtEstimateNo.Name = "txtEstimateNo"
-        Me.txtEstimateNo.Size = New System.Drawing.Size(130, 20)
-        Me.txtEstimateNo.TabIndex = 59
-        '
-        'Label12
-        '
-        Me.Label12.AutoSize = True
-        Me.Label12.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.Location = New System.Drawing.Point(21, 188)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(59, 14)
-        Me.Label12.TabIndex = 120
-        Me.Label12.Text = "Postcode:"
-        '
-        'txtBillToPostcode
-        '
-        Me.txtBillToPostcode.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtBillToPostcode.HideSelection = False
-        Me.txtBillToPostcode.Location = New System.Drawing.Point(123, 185)
-        Me.txtBillToPostcode.Name = "txtBillToPostcode"
-        Me.txtBillToPostcode.Size = New System.Drawing.Size(156, 20)
-        Me.txtBillToPostcode.TabIndex = 116
-        '
-        'Label11
-        '
-        Me.Label11.AutoSize = True
-        Me.Label11.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label11.Location = New System.Drawing.Point(21, 162)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(62, 14)
-        Me.Label11.TabIndex = 119
-        Me.Label11.Text = "City/Town:"
-        '
-        'txtBillToCity
-        '
-        Me.txtBillToCity.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtBillToCity.HideSelection = False
-        Me.txtBillToCity.Location = New System.Drawing.Point(123, 159)
-        Me.txtBillToCity.Name = "txtBillToCity"
-        Me.txtBillToCity.Size = New System.Drawing.Size(156, 20)
-        Me.txtBillToCity.TabIndex = 115
-        '
-        'Label10
-        '
-        Me.Label10.AutoSize = True
-        Me.Label10.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.Location = New System.Drawing.Point(21, 136)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(89, 14)
-        Me.Label10.TabIndex = 118
-        Me.Label10.Text = "Street Address:"
-        '
-        'txtBillToAddress
-        '
-        Me.txtBillToAddress.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtBillToAddress.HideSelection = False
-        Me.txtBillToAddress.Location = New System.Drawing.Point(123, 133)
-        Me.txtBillToAddress.Name = "txtBillToAddress"
-        Me.txtBillToAddress.Size = New System.Drawing.Size(156, 20)
-        Me.txtBillToAddress.TabIndex = 114
-        '
-        'Label9
-        '
-        Me.Label9.AutoSize = True
-        Me.Label9.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(21, 110)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(96, 14)
-        Me.Label9.TabIndex = 117
-        Me.Label9.Text = "Customer Name:"
-        '
-        'txtBillToName
-        '
-        Me.txtBillToName.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtBillToName.HideSelection = False
-        Me.txtBillToName.Location = New System.Drawing.Point(123, 107)
-        Me.txtBillToName.Name = "txtBillToName"
-        Me.txtBillToName.Size = New System.Drawing.Size(156, 20)
-        Me.txtBillToName.TabIndex = 113
-        '
-        'chkSameAsBill
-        '
-        Me.chkSameAsBill.AutoSize = True
-        Me.chkSameAsBill.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.chkSameAsBill.Location = New System.Drawing.Point(425, 208)
-        Me.chkSameAsBill.Name = "chkSameAsBill"
-        Me.chkSameAsBill.Size = New System.Drawing.Size(141, 18)
-        Me.chkSameAsBill.TabIndex = 134
-        Me.chkSameAsBill.Text = "Same as Bill Address"
-        Me.chkSameAsBill.UseVisualStyleBackColor = True
-        '
-        'Label13
-        '
-        Me.Label13.AutoSize = True
-        Me.Label13.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.Location = New System.Drawing.Point(309, 185)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(59, 14)
-        Me.Label13.TabIndex = 138
-        Me.Label13.Text = "Postcode:"
-        '
-        'txtShipToPostcode
-        '
-        Me.txtShipToPostcode.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtShipToPostcode.HideSelection = False
-        Me.txtShipToPostcode.Location = New System.Drawing.Point(411, 182)
-        Me.txtShipToPostcode.Name = "txtShipToPostcode"
-        Me.txtShipToPostcode.Size = New System.Drawing.Size(155, 20)
-        Me.txtShipToPostcode.TabIndex = 133
-        '
-        'Label14
-        '
-        Me.Label14.AutoSize = True
-        Me.Label14.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label14.Location = New System.Drawing.Point(309, 159)
-        Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(62, 14)
-        Me.Label14.TabIndex = 137
-        Me.Label14.Text = "City/Town:"
-        '
-        'txtShipToCity
-        '
-        Me.txtShipToCity.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtShipToCity.HideSelection = False
-        Me.txtShipToCity.Location = New System.Drawing.Point(411, 156)
-        Me.txtShipToCity.Name = "txtShipToCity"
-        Me.txtShipToCity.Size = New System.Drawing.Size(155, 20)
-        Me.txtShipToCity.TabIndex = 132
-        '
-        'Label15
-        '
-        Me.Label15.AutoSize = True
-        Me.Label15.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label15.Location = New System.Drawing.Point(309, 133)
-        Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(89, 14)
-        Me.Label15.TabIndex = 136
-        Me.Label15.Text = "Street Address:"
-        '
-        'txtShipToAddress
-        '
-        Me.txtShipToAddress.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtShipToAddress.HideSelection = False
-        Me.txtShipToAddress.Location = New System.Drawing.Point(411, 130)
-        Me.txtShipToAddress.Name = "txtShipToAddress"
-        Me.txtShipToAddress.Size = New System.Drawing.Size(155, 20)
-        Me.txtShipToAddress.TabIndex = 131
-        '
-        'Label16
-        '
-        Me.Label16.AutoSize = True
-        Me.Label16.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label16.Location = New System.Drawing.Point(309, 107)
-        Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(96, 14)
-        Me.Label16.TabIndex = 135
-        Me.Label16.Text = "Customer Name:"
-        '
-        'txtShipToName
-        '
-        Me.txtShipToName.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtShipToName.HideSelection = False
-        Me.txtShipToName.Location = New System.Drawing.Point(411, 104)
-        Me.txtShipToName.Name = "txtShipToName"
-        Me.txtShipToName.Size = New System.Drawing.Size(155, 20)
-        Me.txtShipToName.TabIndex = 130
-        '
-        'GroupBox2
-        '
-        Me.GroupBox2.Controls.Add(Me.Label17)
-        Me.GroupBox2.Controls.Add(Me.Label7)
-        Me.GroupBox2.Controls.Add(Me.Label1)
-        Me.GroupBox2.Controls.Add(Me.chkSameAsBill)
-        Me.GroupBox2.Controls.Add(Me.txtCutomerID)
-        Me.GroupBox2.Controls.Add(Me.Label13)
-        Me.GroupBox2.Controls.Add(Me.txtShipToPostcode)
-        Me.GroupBox2.Controls.Add(Me.txtBillToName)
-        Me.GroupBox2.Controls.Add(Me.Label14)
-        Me.GroupBox2.Controls.Add(Me.Label9)
-        Me.GroupBox2.Controls.Add(Me.txtShipToCity)
-        Me.GroupBox2.Controls.Add(Me.txtBillToAddress)
-        Me.GroupBox2.Controls.Add(Me.Label15)
-        Me.GroupBox2.Controls.Add(Me.Label10)
-        Me.GroupBox2.Controls.Add(Me.txtShipToAddress)
-        Me.GroupBox2.Controls.Add(Me.txtBillToCity)
-        Me.GroupBox2.Controls.Add(Me.Label16)
-        Me.GroupBox2.Controls.Add(Me.Label11)
-        Me.GroupBox2.Controls.Add(Me.txtShipToName)
-        Me.GroupBox2.Controls.Add(Me.txtBillToPostcode)
-        Me.GroupBox2.Controls.Add(Me.Label12)
-        Me.GroupBox2.Font = New System.Drawing.Font("Calibri", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox2.Location = New System.Drawing.Point(12, 55)
-        Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(589, 250)
-        Me.GroupBox2.TabIndex = 139
-        Me.GroupBox2.TabStop = False
-        Me.GroupBox2.Text = "Customer Details"
-        '
-        'Label17
-        '
-        Me.Label17.AutoSize = True
-        Me.Label17.Font = New System.Drawing.Font("Calibri Light", 11.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label17.Location = New System.Drawing.Point(309, 76)
-        Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(55, 18)
-        Me.Label17.TabIndex = 140
-        Me.Label17.Text = "Ship To:"
-        '
-        'Label7
-        '
-        Me.Label7.AutoSize = True
-        Me.Label7.Font = New System.Drawing.Font("Calibri Light", 11.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(21, 76)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(46, 18)
-        Me.Label7.TabIndex = 139
-        Me.Label7.Text = "Bill To:"
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(20, 43)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(79, 14)
-        Me.Label1.TabIndex = 10
-        Me.Label1.Text = "Customer No:"
-        '
-        'txtCutomerID
-        '
-        Me.txtCutomerID.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtCutomerID.HideSelection = False
-        Me.txtCutomerID.Location = New System.Drawing.Point(105, 40)
-        Me.txtCutomerID.Name = "txtCutomerID"
-        Me.txtCutomerID.Size = New System.Drawing.Size(130, 20)
-        Me.txtCutomerID.TabIndex = 9
-        '
-        'Label8
-        '
-        Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("Calibri", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(20, 328)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(116, 23)
-        Me.Label8.TabIndex = 140
-        Me.Label8.Text = "Invoice Items"
-        '
-        'Label19
-        '
-        Me.Label19.AutoSize = True
-        Me.Label19.Font = New System.Drawing.Font("Calibri", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label19.Location = New System.Drawing.Point(705, 715)
-        Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(114, 23)
-        Me.Label19.TabIndex = 141
-        Me.Label19.Text = "Invoice Total:"
-        '
-        'lblTotal
-        '
-        Me.lblTotal.AutoSize = True
-        Me.lblTotal.Font = New System.Drawing.Font("Calibri", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblTotal.Location = New System.Drawing.Point(825, 715)
-        Me.lblTotal.Name = "lblTotal"
-        Me.lblTotal.Size = New System.Drawing.Size(55, 23)
-        Me.lblTotal.TabIndex = 142
-        Me.lblTotal.Text = "£0.00"
+        Me.cboTerms.Size = New System.Drawing.Size(140, 21)
+        Me.cboTerms.TabIndex = 64
+        '
+        'Label23
+        '
+        Me.Label23.AutoSize = True
+        Me.Label23.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label23.Location = New System.Drawing.Point(6, 128)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(91, 14)
+        Me.Label23.TabIndex = 69
+        Me.Label23.Text = "Payment Terms:"
+        '
+        'TabControl2
+        '
+        Me.TabControl2.Controls.Add(Me.TabPage3)
+        Me.TabControl2.Location = New System.Drawing.Point(508, 90)
+        Me.TabControl2.Name = "TabControl2"
+        Me.TabControl2.SelectedIndex = 0
+        Me.TabControl2.Size = New System.Drawing.Size(347, 217)
+        Me.TabControl2.TabIndex = 177
+        '
+        'btnRemoveItem
+        '
+        Me.btnRemoveItem.Font = New System.Drawing.Font("Calibri", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnRemoveItem.Location = New System.Drawing.Point(116, 487)
+        Me.btnRemoveItem.Name = "btnRemoveItem"
+        Me.btnRemoveItem.Size = New System.Drawing.Size(98, 27)
+        Me.btnRemoveItem.TabIndex = 178
+        Me.btnRemoveItem.Text = "Remove Item"
+        Me.btnRemoveItem.UseVisualStyleBackColor = True
+        '
+        'btnAddDiscount
+        '
+        Me.btnAddDiscount.Font = New System.Drawing.Font("Calibri", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnAddDiscount.Location = New System.Drawing.Point(220, 487)
+        Me.btnAddDiscount.Name = "btnAddDiscount"
+        Me.btnAddDiscount.Size = New System.Drawing.Size(98, 27)
+        Me.btnAddDiscount.TabIndex = 179
+        Me.btnAddDiscount.Text = "Add Discount"
+        Me.btnAddDiscount.UseVisualStyleBackColor = True
+        '
+        'TabControl3
+        '
+        Me.TabControl3.Controls.Add(Me.TabPage4)
+        Me.TabControl3.Controls.Add(Me.TabPage5)
+        Me.TabControl3.Location = New System.Drawing.Point(12, 542)
+        Me.TabControl3.Name = "TabControl3"
+        Me.TabControl3.SelectedIndex = 0
+        Me.TabControl3.Size = New System.Drawing.Size(352, 100)
+        Me.TabControl3.TabIndex = 180
+        '
+        'TabPage4
+        '
+        Me.TabPage4.Controls.Add(Me.txtNotes)
+        Me.TabPage4.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage4.Name = "TabPage4"
+        Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage4.Size = New System.Drawing.Size(344, 74)
+        Me.TabPage4.TabIndex = 0
+        Me.TabPage4.Text = "Notes"
+        Me.TabPage4.UseVisualStyleBackColor = True
+        '
+        'TabPage5
+        '
+        Me.TabPage5.Controls.Add(Me.txtComments)
+        Me.TabPage5.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage5.Name = "TabPage5"
+        Me.TabPage5.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage5.Size = New System.Drawing.Size(344, 74)
+        Me.TabPage5.TabIndex = 1
+        Me.TabPage5.Text = "Private Comments"
+        Me.TabPage5.UseVisualStyleBackColor = True
+        '
+        'txtComments
+        '
+        Me.txtComments.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.txtComments.Location = New System.Drawing.Point(3, 3)
+        Me.txtComments.Multiline = True
+        Me.txtComments.Name = "txtComments"
+        Me.txtComments.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.txtComments.Size = New System.Drawing.Size(338, 68)
+        Me.txtComments.TabIndex = 17
         '
         'CreateInvoice
         '
@@ -642,27 +798,44 @@ Partial Class CreateInvoice
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoScroll = True
         Me.AutoScrollMargin = New System.Drawing.Size(0, 20)
-        Me.AutoSize = True
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.ClientSize = New System.Drawing.Size(954, 741)
-        Me.Controls.Add(Me.lblTotal)
+        Me.ClientSize = New System.Drawing.Size(863, 671)
+        Me.Controls.Add(Me.TabControl3)
+        Me.Controls.Add(Me.btnAddDiscount)
+        Me.Controls.Add(Me.btnRemoveItem)
+        Me.Controls.Add(Me.TabControl2)
+        Me.Controls.Add(Me.TabControl1)
+        Me.Controls.Add(Me.txtSubtotal)
+        Me.Controls.Add(Me.Label16)
+        Me.Controls.Add(Me.txtTax)
+        Me.Controls.Add(Me.Label15)
+        Me.Controls.Add(Me.txtTotal)
+        Me.Controls.Add(Me.btnAddItem)
+        Me.Controls.Add(Me.Label20)
         Me.Controls.Add(Me.Label19)
-        Me.Controls.Add(Me.Label8)
-        Me.Controls.Add(Me.GroupBox2)
-        Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.ItemsGrid)
         Me.Controls.Add(Me.ToolStrip1)
         Me.Name = "CreateInvoice"
         Me.ShowIcon = False
-        Me.Text = "Invoice"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
+        Me.Text = "New Invoice"
+        CType(Me.ItemsGrid, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ToolStrip1.ResumeLayout(False)
         Me.ToolStrip1.PerformLayout()
+        Me.TabControl1.ResumeLayout(False)
+        Me.TabPage1.ResumeLayout(False)
+        Me.TabPage1.PerformLayout()
+        Me.TabPage2.ResumeLayout(False)
+        Me.TabPage2.PerformLayout()
+        Me.TabPage3.ResumeLayout(False)
+        Me.TabPage3.PerformLayout()
         CType(Me.cboTermsLength, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.ItemsGrid, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox1.ResumeLayout(False)
-        Me.GroupBox1.PerformLayout()
-        Me.GroupBox2.ResumeLayout(False)
-        Me.GroupBox2.PerformLayout()
+        Me.TabControl2.ResumeLayout(False)
+        Me.TabControl3.ResumeLayout(False)
+        Me.TabPage4.ResumeLayout(False)
+        Me.TabPage4.PerformLayout()
+        Me.TabPage5.ResumeLayout(False)
+        Me.TabPage5.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -676,51 +849,64 @@ Partial Class CreateInvoice
     Friend WithEvents toolStripSeparator2 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents CloseToolStripButton As System.Windows.Forms.ToolStripButton
     Friend WithEvents HelpToolStripButton As System.Windows.Forms.ToolStripButton
-    Friend WithEvents txtInvoiceNo As System.Windows.Forms.TextBox
-    Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents txtPurchaseNo As System.Windows.Forms.TextBox
-    Friend WithEvents Label3 As System.Windows.Forms.Label
-    Friend WithEvents Label4 As System.Windows.Forms.Label
-    Friend WithEvents Label5 As System.Windows.Forms.Label
-    Friend WithEvents cboTerms As System.Windows.Forms.ComboBox
-    Friend WithEvents cboTermsLength As System.Windows.Forms.NumericUpDown
-    Friend WithEvents txtCreatedBy As System.Windows.Forms.TextBox
-    Friend WithEvents Label6 As System.Windows.Forms.Label
     Friend WithEvents ItemsGrid As System.Windows.Forms.DataGridView
     Friend WithEvents NewToolStripButton As System.Windows.Forms.ToolStripButton
     Friend WithEvents PreviewToolStripButton As System.Windows.Forms.ToolStripButton
-    Friend WithEvents txtDate As System.Windows.Forms.DateTimePicker
-    Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
-    Friend WithEvents Label12 As System.Windows.Forms.Label
-    Friend WithEvents txtBillToPostcode As System.Windows.Forms.TextBox
-    Friend WithEvents Label11 As System.Windows.Forms.Label
-    Friend WithEvents txtBillToCity As System.Windows.Forms.TextBox
-    Friend WithEvents Label10 As System.Windows.Forms.Label
-    Friend WithEvents txtBillToAddress As System.Windows.Forms.TextBox
-    Friend WithEvents Label9 As System.Windows.Forms.Label
-    Friend WithEvents txtBillToName As System.Windows.Forms.TextBox
-    Friend WithEvents chkSameAsBill As System.Windows.Forms.CheckBox
-    Friend WithEvents Label13 As System.Windows.Forms.Label
-    Friend WithEvents txtShipToPostcode As System.Windows.Forms.TextBox
-    Friend WithEvents Label14 As System.Windows.Forms.Label
-    Friend WithEvents txtShipToCity As System.Windows.Forms.TextBox
-    Friend WithEvents Label15 As System.Windows.Forms.Label
-    Friend WithEvents txtShipToAddress As System.Windows.Forms.TextBox
-    Friend WithEvents Label16 As System.Windows.Forms.Label
-    Friend WithEvents txtShipToName As System.Windows.Forms.TextBox
-    Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
-    Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents txtCutomerID As System.Windows.Forms.TextBox
-    Friend WithEvents Label8 As System.Windows.Forms.Label
-    Friend WithEvents Label18 As System.Windows.Forms.Label
-    Friend WithEvents txtEstimateNo As System.Windows.Forms.TextBox
-    Friend WithEvents Label17 As System.Windows.Forms.Label
-    Friend WithEvents Label7 As System.Windows.Forms.Label
     Friend WithEvents Item As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Qty As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Unit As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Unit_Price As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Price As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Label19 As System.Windows.Forms.Label
-    Friend WithEvents lblTotal As System.Windows.Forms.Label
+    Friend WithEvents Label20 As Label
+    Friend WithEvents btnAddItem As Button
+    Friend WithEvents txtNotes As TextBox
+    Friend WithEvents txtTotal As TextBox
+    Friend WithEvents txtTax As TextBox
+    Friend WithEvents Label15 As Label
+    Friend WithEvents txtSubtotal As TextBox
+    Friend WithEvents Label16 As Label
+    Friend WithEvents TabControl1 As TabControl
+    Friend WithEvents TabPage1 As TabPage
+    Friend WithEvents cboTax As ComboBox
+    Friend WithEvents Label10 As Label
+    Friend WithEvents Label3 As Label
+    Friend WithEvents txtPurchaseNo As TextBox
+    Friend WithEvents btnEditCustomer As Button
+    Friend WithEvents txtBillTo As TextBox
+    Friend WithEvents cboCustomer As ComboBox
+    Friend WithEvents btnAddCustomer As Button
+    Friend WithEvents Label1 As Label
+    Friend WithEvents Label9 As Label
+    Friend WithEvents TabPage2 As TabPage
+    Friend WithEvents TabPage3 As TabPage
+    Friend WithEvents Label11 As Label
+    Friend WithEvents cboCreateFrom As ComboBox
+    Friend WithEvents txtAuthor As TextBox
+    Friend WithEvents txtInvoiceNo As TextBox
+    Friend WithEvents cboDate As DateTimePicker
+    Friend WithEvents Label12 As Label
+    Friend WithEvents Label21 As Label
+    Friend WithEvents cboTermsLength As NumericUpDown
+    Friend WithEvents Label22 As Label
+    Friend WithEvents cboTerms As ComboBox
+    Friend WithEvents Label23 As Label
+    Friend WithEvents TabControl2 As TabControl
+    Friend WithEvents btnCreateFrom As Button
+    Friend WithEvents btnRemoveItem As Button
+    Friend WithEvents btnAddDiscount As Button
+    Friend WithEvents TabControl3 As TabControl
+    Friend WithEvents TabPage4 As TabPage
+    Friend WithEvents TabPage5 As TabPage
+    Friend WithEvents txtComments As TextBox
+    Friend WithEvents TextBox12 As TextBox
+    Friend WithEvents ComboBox5 As ComboBox
+    Friend WithEvents Label6 As Label
+    Friend WithEvents chkSameAsBill As CheckBox
+    Friend WithEvents ComboBox4 As ComboBox
+    Friend WithEvents Label2 As Label
+    Friend WithEvents Label4 As Label
+    Friend WithEvents TextBox3 As TextBox
+    Friend WithEvents txtShipTo As TextBox
+    Friend WithEvents Label5 As Label
 End Class

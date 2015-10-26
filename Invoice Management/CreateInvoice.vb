@@ -1,40 +1,32 @@
 ﻿Option Explicit On
 
 Imports Invoice_Management.GlobalVar
-Imports Invoice_Management.Invoice
-Imports Invoice_Management.InvoiceItem
 Imports System.IO
-Imports System.IO.FileStream
-Imports System.IO.StreamWriter
-Imports System.IO.StreamReader
-Imports PdfSharp
-Imports PdfSharp.Drawing
-Imports PdfSharp.Pdf
 
 Public Class CreateInvoice
 
     'VARIABLES
-    Private invoiceList As New List(Of Invoice)
     Public num_invoices As Integer = 1
     Public num_rows As Integer
     Public inv As New Invoice()
 
     Private Sub CreateInvoice_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
-        Me.MaximumSize = New Size(Main.getDockWidth(Main.SplitContainer1.Panel2), Main.getDockHeight(Main.SplitContainer1.Panel2))
+        'Me.MaximumSize = New Size(Main.getDockWidth(Main.SplitContainer1.Panel2), Main.getDockHeight(Main.SplitContainer1.Panel2))
+        Me.MaximumSize = New Size(Me.Width, Main.getDockHeight(Main.SplitContainer1.Panel2))
         Me.TopLevel = False
         Main.SplitContainer1.Panel2.Controls.Add(Me)
         Call Main.DockWindow(Me)
 
     End Sub
 
-    Private Sub CreateInvoice_SizeChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.SizeChanged
+    Public Sub initInvoices()
 
-        If Me.WindowState = FormWindowState.Maximized Then
+        For Each file As String In My.Computer.FileSystem.GetFiles(invoicePath)
 
-            Call Main.DockWindow(Me)
+            invoiceList.Add(readInvoiceFromFile(invoicePath, file.ToString, invoiceList))
 
-        End If
+        Next
 
     End Sub
 
@@ -46,22 +38,24 @@ Public Class CreateInvoice
 
         End If
 
-        num_rows = ItemsGrid.RowCount - 1
-
-        Dim tempInvoice(1) As Invoice
-        Dim tempInvoiceItems(1, num_rows) As InvoiceItem
-
         ItemsGrid.EndEdit()
+        If checkFormData() Then
 
-        If CheckFormData() = True Then
+            Dim invoicePreview As New Invoice
+            Dim newPreview As PDF = New PDF
 
-            'Dim pdf As New PDF(a.previewFileLocation, a.previewFileName, 1, num_rows, tempInvoice, tempInvoiceItems, a.CompanyName, a.CompanyAddress1, a.CompanyAddress2, a.CompanyCity, a.CompanyPostcode, a.CompanyPhone, a.CompanyMobile, a.CompanyEmail)
+            getFormData(invoicePreview)
+            newPreview.drawInvoiceHeader(oCompanyName, oCompanyAddress1, oCompanyAddress2, oCompanyCity, oCompanyPostcode, oCompanyPhone, oCompanyMobile, oCompanyEmail)
+            newPreview.drawDetails(invoicePreview)
+            'Draw the rest of the PDF
+            newPreview.SavePDF(previewFileLocation, previewFileName)
 
             PreviewInvoice.Show(Main)
 
         End If
 
     End Sub
+
 
     Private Sub CloseToolStripButton_Click(sender As System.Object, e As System.EventArgs) Handles CloseToolStripButton.Click
 
@@ -77,23 +71,22 @@ Public Class CreateInvoice
 
     End Sub
 
-    Private Sub getFormData(ByVal newInvoice As Invoice, ByVal item As InvoiceItem)
+    Private Sub getFormData(ByVal newInvoice As Invoice)
 
         newInvoice.pInvoiceNo = txtInvoiceNo.Text
-        newInvoice.pEstimateNo = txtEstimateNo.Text
         newInvoice.pPurchaseNo = txtPurchaseNo.Text
-        newInvoice.pCustomerNo = txtCutomerID.Text
-        newInvoice.pInvoiceDate = txtDate.Text
-        newInvoice.pEstimateDate = ""
+        newInvoice.pCustomerNo = cboCustomer.Text
+        newInvoice.pInvoiceDate = cboDate.Text
         newInvoice.pPurchaseNo = txtPurchaseNo.Text
-        newInvoice.pBillingName = txtBillToName.Text
-        newInvoice.pBillingAddress1 = txtBillToAddress.Text
-        newInvoice.pBillingAddress2 = ""
-        newInvoice.pBillingCity = txtBillToCity.Text
-        newInvoice.pBillingPostcode = txtBillToPostcode.Text
+        newInvoice.pBillTo = txtBillTo.Text
         newInvoice.pTerms = cboTerms.Text
         newInvoice.pTermsLength = cboTermsLength.Value
-        newInvoice.pTotal = "0"
+        newInvoice.pAuthor = txtAuthor.Text
+        newInvoice.pNotes = txtNotes.Text
+        newInvoice.pComments = txtComments.Text
+        newInvoice.pInvoiceTax = txtTax.Text
+        newInvoice.pInvoiceSubtotal = txtSubtotal.Text
+        newInvoice.pTotal = txtTotal.Text
 
         invoiceList.Add(newInvoice) 'Append the new invoice to the invoice list
 
@@ -126,7 +119,8 @@ Public Class CreateInvoice
 
         Dim newInvoice As New Invoice()
         Dim newInvoiceItem As New InvoiceItem
-        Call getFormData(newInvoice, newInvoiceItem) 'Add data to instance of Invoice
+
+        Call getFormData(newInvoice) 'Add data to instance of Invoice
         Call writeInvoiceToFile(newInvoice, invoicePath, timeStamp & "_Invoice_" & newInvoice.pInvoiceNo)
         Call LogInvoiceToFile(newInvoice, logPath)
 
@@ -206,9 +200,9 @@ Public Class CreateInvoice
 
         End If
 
-        'Try
+        Try
 
-        SaveDialog.CreatePrompt = False
+            SaveDialog.CreatePrompt = False
             SaveDialog.OverwritePrompt = True
             SaveDialog.FileName = FileName
             SaveDialog.DefaultExt = "bin"
@@ -223,31 +217,40 @@ Public Class CreateInvoice
                 Dim fs As FileStream = New FileStream(FileLocation, FileMode.OpenOrCreate)
                 Dim bw As New BinaryWriter(fs)
 
-            'Loop through all the properties in Invoice Class and output to Binary File
-            For Each _property In GetType(Invoice).GetProperties()
+                'Loop through all the properties in Invoice Class and output to Binary File
+                For Each _property In GetType(Invoice).GetProperties()
 
-                bw.Write(_property.Name)
-                bw.Write(_property.GetValue(invoice, Nothing))
+                    If _property.PropertyType.FullName = "System.Single" Then
 
-            Next
+                        bw.Write(_property.Name)
+                        bw.Write(CSng(_property.GetValue(invoice, Nothing)))
 
-            fs.Close()
+                    ElseIf _property.PropertyType.FullName = "System.String" Then
+
+                        bw.Write(_property.Name)
+                        bw.Write(_property.GetValue(invoice, Nothing))
+
+                    End If
+
+                Next
+
+                fs.Close()
                 bw.Close()
 
                 MsgBox("Invoice " & invoice.pInvoiceNo & " Successfully Saved! ", MsgBoxStyle.Information, "Saved")
 
             End If
 
-        'Catch ex As Exception
-        'MsgBox("Somthing went wrong while trying to save the invoice to file." & vbCrLf & "You can try to amend this error in:" & Location & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Somthing went wrong ")
+        Catch ex As Exception
+            MsgBox("Somthing went wrong while trying to save the invoice to file." & vbCrLf & "You can try to amend this error in:" & Location & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Somthing went wrong ")
 
-        'Finally
+        Finally
 
-        'End Try
+        End Try
 
     End Sub
 
-    Public Function readLastInvoiceFromFile(ByVal FolderLocation As String)
+    Private Function readLastInvoiceFromFile(ByVal FolderLocation As String)
 
         Main.ListBox1.Items.Clear()
         Dim invoice As Invoice = New Invoice
@@ -282,7 +285,7 @@ Public Class CreateInvoice
 
     End Function
 
-    Private Function readInvoiceFromFile(ByVal FolderLocation As String, ByVal FileName As String)
+    Public Function readInvoiceFromFile(ByVal FolderLocation As String, ByVal FileName As String, ByRef invoices As List(Of Invoice))
 
         Dim invoice As Invoice = New Invoice
         Dim FilePath As String
@@ -291,8 +294,8 @@ Public Class CreateInvoice
 
         If System.IO.File.Exists(FilePath) Then
 
-            Try
-                Dim fs As FileStream = New FileStream(FilePath, FileMode.Open)
+            'Try
+            Dim fs As FileStream = New FileStream(FilePath, FileMode.Open)
                 Dim br As BinaryReader = New BinaryReader(fs)
                 Dim line As String = ""
                 Dim line2 As String = ""
@@ -301,31 +304,43 @@ Public Class CreateInvoice
                 Main.ListBox1.Items.Add("Found invoice file " & FilePath)
                 Main.ListBox1.ForeColor = Color.Black
 
-                For Each _property In GetType(Invoice).GetProperties()
+            For Each _property In GetType(Invoice).GetProperties()
+
+                If _property.PropertyType.FullName = "System.Single" Then
+
+                    line = br.ReadString()
+                    line2 = br.ReadSingle()
+                    Main.ListBox1.Items.Add(line & ": " & line2)
+
+                ElseIf _property.PropertyType.FullName = "System.String" Then
 
                     line = br.ReadString()
                     line2 = br.ReadString()
-                    _property.SetValue(invoice, line2, Nothing)
                     Main.ListBox1.Items.Add(line & ": " & line2)
 
-                Next
+                End If
 
-                Main.ListBox1.Items.Add("")
+                _property.SetValue(invoice, line2, Nothing)
+                'Main.ListBox1.Items.Add(line & ": " & line2)
+
+            Next
+
+            Main.ListBox1.Items.Add("")
 
                 fs.Close()
                 br.Close()
 
                 Return invoice
 
-            Catch ex As Exception
-                MsgBox("An error occured reading the file from directory: " & FilePath & ". " & vbCrLf & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "IO Error")
-            Finally
-                Main.ListBox1.ForeColor = Color.Red
-                Main.ListBox1.Items.Add("An error occured reading the file: " & FilePath)
-                Main.ListBox1.ForeColor = Color.Black
-            End Try
+                'Catch ex As Exception
+                '    MsgBox("An error occured reading the file from directory: " & FilePath & ". " & vbCrLf & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "IO Error")
+                'Finally
+                '    Main.ListBox1.ForeColor = Color.Red
+                '    Main.ListBox1.Items.Add("An error occured reading the file: " & FilePath)
+                '    Main.ListBox1.ForeColor = Color.Black
+                'End Try
 
-        Else
+                Else
             MsgBox("The invoice file at: " & FilePath & " Could not be found " & vbCrLf & "Make sure the file exists and is not corrupt ", MsgBoxStyle.Exclamation, "File not Found")
         End If
 
@@ -333,291 +348,63 @@ Public Class CreateInvoice
 
     End Function
 
-    Private Function checkFormData() As String
+    'Protected Overrides Sub OnPaint(e As PaintEventArgs)
+
+    '    Dim g As Graphics = e.Graphics
+    '    Dim penRed As New Pen(Color.Red, 2.0)
+
+    '    For Each control In Me.Controls
+
+    '        If TypeOf control Is TextBox Then
+
+    '            Dim t As TextBox = CType(control, TextBox)
+    '            g.DrawRectangle(penRed, New Rectangle(t.Location, t.Size))
+
+    '        End If
+
+    '    Next
+
+    '    penRed.Dispose()
+
+    'End Sub
+
+    Private Function checkFormData() As Boolean
 
         Dim errorString As String = ""
         Dim control As Control
 
         For Each control In Me.Controls
 
-            If control.GetType() Is GetType(TextBox) Then
+            If TypeOf control Is TextBox Then
 
                 Dim t As TextBox = CType(control, TextBox)
                 If t.Text = "" Then
-                    t.BackColor = Color.Red()
-                    errorString += ""
+                    errorString = "Please complete the marked fields "
                 End If
 
-            End If
-            If control.GetType() Is GetType(DateTimePicker) Then
+
+            ElseIf TypeOf control Is DateTimePicker Then
 
                 Dim t As DateTimePicker = CType(control, DateTimePicker)
                 If t.Value = Nothing Then
 
                 End If
 
+
+            ElseIf TypeOf control Is ComboBox Then
+
+                Dim t As ComboBox = CType(control, ComboBox)
+                If t.SelectedValue = "" Then
+                    errorString = "Please complete the marked fields "
+                End If
+
             End If
 
         Next
 
-        Return errorString
+        If errorString = "" Then Return True Else Return False
 
     End Function
-
-    'Private Function CheckFormData() As String
-
-    '    Dim errorString As String = ""
-
-    '    With txtCutomerID
-
-    '        If IsNumeric(.Text) And .TextLength <= 8 Then
-
-    '            .BackColor = Color.White
-
-    '        ElseIf .Text = Nothing Then
-    '            .BackColor = Color.Red
-    '            errorString += "The customer number must not be nothing" & vbCrLf
-
-    '        Else
-    '            .BackColor = Color.Red
-    '            errorString += "The customer number must be less than 9 characters and be a number" & vbCrLf
-
-    '        End If
-
-    '    End With
-
-    '    With txtInvoiceNo
-
-    '        If IsNumeric(.Text) And .TextLength <= 8 Then
-
-    '            .BackColor = Color.White
-
-    '        ElseIf .Text = Nothing Then
-    '            .BackColor = Color.Red
-    '            errorString += "The invoice number must not be nothing" & vbCrLf
-
-    '        Else
-    '            .BackColor = Color.Red
-    '            errorString += "The invoice number must be less than 9 characters and be a number" & vbCrLf
-
-    '        End If
-
-    '    End With
-
-    '    With txtPurchaseNo
-
-    '        If IsNumeric(.Text) And .TextLength <= 8 Then
-    '            .BackColor = Color.White
-
-    '        ElseIf .Text = Nothing Then
-    '            .BackColor = Color.Red
-    '            errorString += "The purchase number must not be nothing" & vbCrLf
-
-    '        Else
-    '            .BackColor = Color.Red
-    '            errorString += "The purchase number must be less than 9 characters and be a number" & vbCrLf
-
-    '        End If
-
-    '    End With
-
-    '    With cboTerms
-
-    '        If (.Text) = Nothing Then
-
-    '            .BackColor = Color.Red
-    '            errorString += "The terms of payment type must be selected" & vbCrLf
-
-    '        Else
-    '            .BackColor = Color.White
-
-    '        End If
-
-    '    End With
-
-    '    With cboTermsLength
-
-    '        If .Value < 1 Or .Value > 100 Then
-
-    '            .BackColor = Color.Red
-    '            errorString += "The Terms Length must be between 1 and 100" & vbCrLf
-
-    '        ElseIf .Value = Nothing Then
-    '            .BackColor = Color.Red
-    '            errorString += "The Terms Length must not be nothing" & vbCrLf
-
-    '        Else
-
-    '            .BackColor = Color.White
-
-    '        End If
-
-    '    End With
-
-    '    With txtBillToName
-
-    '        If (.Text) = Nothing Then
-
-    '            .BackColor = Color.Red
-    '            errorString += "The Bill To Name must not be nothing" & vbCrLf
-
-    '        Else
-    '            .BackColor = Color.White
-
-    '        End If
-
-    '    End With
-
-    '    With txtBillToAddress
-
-    '        If (.TextLength > 50) Then
-
-    '            .BackColor = Color.Red
-    '            errorString += "The Street address must be 50 characters or less" & vbCrLf
-
-    '        ElseIf .Text = Nothing Then
-    '            .BackColor = Color.Red
-    '            errorString += "The Bill To Street Address must not be nothing" & vbCrLf
-
-    '        Else
-    '            .BackColor = Color.White
-
-
-    '        End If
-
-    '    End With
-
-    '    With txtBillToCity
-
-    '        If (.TextLength > 50) Then
-
-    '            .BackColor = Color.Red
-    '            errorString += "The Bill To City must be 50 characters or less" & vbCrLf
-
-    '        ElseIf .Text = Nothing Then
-    '            .BackColor = Color.Red
-    '            errorString += "The Bill To City must not be nothing" & vbCrLf
-
-    '        Else
-    '            .BackColor = Color.White
-
-    '        End If
-
-    '    End With
-
-    '    With txtBillToPostcode
-
-    '        If (.TextLength > 50) Then
-
-    '            .BackColor = Color.Red
-    '            errorString += "The Postcode must be 8 characters or less" & vbCrLf
-
-    '        ElseIf .Text = Nothing Then
-    '            .BackColor = Color.Red
-    '            errorString += "The Bill To Postcode must not be nothing" & vbCrLf
-
-    '        Else
-    '            .BackColor = Color.White
-
-    '        End If
-
-    '    End With
-
-    '    With txtShipToName
-
-    '        If (.TextLength > 50) Then
-
-    '            .BackColor = Color.Red
-    '            errorString += "The Ship To Name must be 50 characters or less" & vbCrLf
-
-    '        ElseIf .Text = Nothing Then
-    '            .BackColor = Color.Red
-    '            errorString += "The Ship To Name must not be nothing" & vbCrLf
-
-    '        Else
-    '            .BackColor = Color.White
-
-    '        End If
-
-    '    End With
-
-    '    With txtShipToAddress
-
-    '        If (.TextLength > 50) Then
-
-    '            .BackColor = Color.Red
-    '            errorString += "The Ship To Street address must be 50 characters or less" & vbCrLf
-
-    '        ElseIf .Text = Nothing Then
-    '            .BackColor = Color.Red
-    '            errorString += "The Ship To Street Address must not be nothing" & vbCrLf
-
-    '        Else
-    '            .BackColor = Color.White
-
-    '        End If
-
-    '    End With
-
-    '    With txtShipToCity
-
-    '        If (.TextLength > 50) Then
-
-    '            .BackColor = Color.Red
-    '            errorString += "The Ship To City must be 50 characters or less" & vbCrLf
-
-    '        ElseIf .Text = Nothing Then
-    '            .BackColor = Color.Red
-    '            errorString += "The Ship To City must not be nothing" & vbCrLf
-
-    '        Else
-    '            .BackColor = Color.White
-
-    '        End If
-
-    '    End With
-
-    '    With txtShipToPostcode
-
-    '        If (.TextLength > 50) Then
-
-    '            .BackColor = Color.Red
-    '            errorString += "The Ship To Postcode must be 50 characters or less" & vbCrLf
-
-    '        ElseIf .Text = Nothing Then
-    '            .BackColor = Color.Red
-    '            errorString += "The Ship to Postcode must not be nothing" & vbCrLf
-
-    '        Else
-    '            .BackColor = Color.White
-
-    '        End If
-
-    '    End With
-
-    '    'Validate datagrid view
-    '    For row As Integer = 0 To num_rows - 1
-    '        For col As Integer = 0 To 4
-    '            If ItemsGrid.Item(col, row).Value = Nothing Then
-    '                'check for empty cells 
-    '            End If
-    '        Next
-
-    '        If getStringLength(ItemsGrid.Item(0, row).Value) > 50 Then
-
-    '            errorString += "Item " & row & " must be 50 characters or less" & vbCrLf
-
-    '        ElseIf getStringLength(ItemsGrid.Item(1, row).Value) > 10 Then
-
-    '            errorString += "Item " & row & "qty must be 10 characters or less" & vbCrLf
-
-    '        End If
-
-    '    Next
-
-    '    Return errorString
-
-    'End Function
 
     Private Function getStringLength(ByVal cell As String)
 
@@ -631,20 +418,14 @@ Public Class CreateInvoice
 
     End Function
 
-    Private Sub chkSameAsBill_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkSameAsBill.CheckedChanged
+    Private Sub chkSameAsBill_CheckedChanged(sender As System.Object, e As System.EventArgs)
 
-        If chkSameAsBill.Checked = True Then
+        If chkSameAsBill.Checked Then
 
-            txtShipToName.Text = txtBillToName.Text
-            txtShipToAddress.Text = txtBillToAddress.Text
-            txtShipToCity.Text = txtBillToCity.Text
-            txtShipToPostcode.Text = txtBillToPostcode.Text
+            txtShipTo.Text = txtBillTo.Text
 
         Else
-            txtShipToName.Clear()
-            txtShipToAddress.Clear()
-            txtShipToCity.Clear()
-            txtShipToPostcode.Clear()
+            txtShipTo.Clear()
 
         End If
 

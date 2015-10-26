@@ -1,6 +1,7 @@
 ﻿Option Explicit On
 
 Imports Invoice_Management.GlobalVar
+Imports System.IO
 
 Public Class Main
 
@@ -8,66 +9,39 @@ Public Class Main
 
         SplitContainer1.Panel1MinSize = 192
 
-        'test()
+        CreateInvoice.initInvoices()
 
     End Sub
 
-    'Sub test()
+    Public Sub WindowMaximize(ByVal sender As System.Object, e As System.EventArgs) Handles Me.AutoSizeChanged
 
-    '    Dim i As New Invoice()
-    '    Dim pdf1 As New PDF()
-    '    Dim invitem As New InvoiceItem()
-    '    Dim invItem2 As New InvoiceItem()
+        DockWindow(CreateInvoice)
 
-    '    i.pInvoiceNo = "00291"
-    '    i.pEstimateNo = "000"
-    '    i.pCustomerNo = "000"
-    '    i.pPurchaseNo = "000"
-    '    i.pInvoiceDate = "12/01/15"
-    '    i.pEstimateDate = "10/ 01/15"
-    '    i.pBillingName = "Craig Forbes"
-    '    i.pBillingAddress1 = "27 Strathburn Gardens"
-    '    i.pBillingAddress2 = ""
-    '    i.pBillingCity = "Inverurie"
-    '    i.pBillingPostcode = "AB51 4RY"
-    '    i.pTerms = "30 Days"
-    '    i.pTermsLength = 30
-    '    i.pTotal = 120.0
+    End Sub
 
-    '    Dim invoiceList As New List(Of Invoice)
-    '    Dim itemsList As New List(Of InvoiceItem)
+    Private Sub cmdCreateInvoice_Click(sender As System.Object, e As System.EventArgs) Handles cmdCreateInvoice.Click
 
-    '    invitem.pItem = "Things"
-    '    invitem.pQty = "1"
-    '    invitem.pUnit = "EA"
-    '    invitem.pUnitPrice = "12.00"
-    '    invitem.pPrice = "12.00"
+        CreateInvoice.Show()
+        CreateInvoice.Focus()
+        CreateInvoice.BringToFront()
 
-    '    invItem2.pItem = "Stuff"
-    '    invItem2.pQty = "5"
-    '    invItem2.pUnit = "EA"
-    '    invItem2.pUnitPrice = "1.00"
-    '    invItem2.pPrice = "5.00"
+    End Sub
 
+    Private Sub cmdViewInvoice_Click(sender As System.Object, e As System.EventArgs) Handles cmdViewInvoice.Click
 
-    '    itemsList.Add(invitem)
-    '    itemsList.Add(invItem2)
-    '    invoiceList.Add(i)
+        ViewInvoice.Show()
+        ViewInvoice.Focus()
+        ViewInvoice.BringToFront()
 
-    '    MsgBox(i.ToString)
+    End Sub
 
+    Private Sub cmdOptions_Click(sender As System.Object, e As System.EventArgs) Handles cmdOptions.Click
 
-    '    pdf1.drawInvoiceHeader("Bobs Company", "27 Strathburn Gardens", "Inverurie", "Aberdeenshire", "AB51 0NF", "01467671554", "07841377715", "bob@company.com")
-    '    pdf1.SavePDF("C:\Users\Craig\Desktop", "PDF1_Test.pdf")
+        Options.Show()
+        Options.Focus()
+        Options.BringToFront()
 
-    '    CreateInvoice.writeInvoiceToFile(i, invoicePath & "\", "TestFile1")
-
-    '    i.readInvoiceFromFile(invoiceList, "C:\Users\Craig\Desktop\test.bin")
-
-    '    CreateInvoice.LogInvoiceToFile(i, itemsList, "C:\Users\Craig\Desktop\testLog.txt")
-
-
-    'End Sub
+    End Sub
 
     Private Sub Main_SizeChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.SizeChanged
 
@@ -111,15 +85,21 @@ Public Class Main
         Form.Left = 1
         Form.Top = 1
 
-        If Width >= 1280 And Height >= 900 Then
-            Form.Width = getDockWidth(SplitContainer1.Panel2) - ((getDockWidth(SplitContainer1.Panel2) / 100) * 45)
+        If (Width >= 1024 And Height >= 768) AndAlso (Width < 1280 And Height < 900) Then
+            Form.Width = getDockWidth(SplitContainer1.Panel2) - ((getDockWidth(SplitContainer1.Panel2) / 100) * 70)
             Form.Height = getDockHeight(SplitContainer1.Panel2)
 
-        ElseIf (Width <= 1366 And Width > 1280) And (Height >= 768 And Height < 900) Then
-            Form.Width = getDockWidth(SplitContainer1.Panel2) - ((getDockWidth(SplitContainer1.Panel2) / 100) * 40)
+        ElseIf (Width >= 1280 And Height >= 900) AndAlso (Width < 1920 And Height < 1080) Then
+            Form.Width = getDockWidth(SplitContainer1.Panel2) - ((getDockWidth(SplitContainer1.Panel2) / 100) * 50)
             Form.Height = getDockHeight(SplitContainer1.Panel2)
 
-        Else
+        ElseIf (Width >= 1920 And Height >= 1080) AndAlso (Width < 2560 And Height < 1440) Then
+            'Size for standard 1080p HD resoluion
+            Form.Width = getDockWidth(SplitContainer1.Panel2) - ((getDockWidth(SplitContainer1.Panel2) / 100) * 15)
+            Form.Height = getDockHeight(SplitContainer1.Panel2)
+
+        ElseIf Width >= 2560 And Height >= 1440 Then
+            'Size for very large resolutions
             Form.Width = getDockWidth(SplitContainer1.Panel2)
             Form.Height = getDockHeight(SplitContainer1.Panel2)
 
@@ -127,34 +107,37 @@ Public Class Main
 
     End Sub
 
-    Public Sub WindowMaximize(ByVal sender As System.Object, e As System.EventArgs) Handles Me.AutoSizeChanged
+    Private Sub LoadCompanyDetails(ByVal FileLocation As String, ByVal FileName As String)
 
-        Call DockWindow(CreateInvoice)
+        Dim FilePath As String = Path.Combine(FileLocation, FileName)
+        Dim sr As StreamReader = My.Computer.FileSystem.OpenTextFileReader(FilePath)
+        Dim line As String = ""
+
+        'Quick and dirty reads the users company data back from a saved txt file
+        line = sr.ReadLine()
+        oOwnerName = line
+        line = sr.ReadLine()
+        oCompanyName = line
+        line = sr.ReadLine()
+        oCompanyAddress1 = line
+        line = sr.ReadLine()
+        oCompanyAddress2 = line
+        line = sr.ReadLine()
+        oCompanyCity = line
+        line = sr.ReadLine()
+        oCompanyPostcode = line
+        line = sr.ReadLine()
+        oCompanyPhone = line
+        line = sr.ReadLine()
+        oCompanyMobile = line
+        line = sr.ReadLine()
+        oCompanyEmail = line
+        line = sr.ReadLine()
+        oWebsite = line
+        line = sr.ReadLine()
+        oDescription = line
 
     End Sub
 
-    Private Sub cmdCreateInvoice_Click(sender As System.Object, e As System.EventArgs) Handles cmdCreateInvoice.Click
-
-        CreateInvoice.Show()
-        CreateInvoice.Focus()
-        CreateInvoice.BringToFront()
-
-    End Sub
-
-    Private Sub cmdViewInvoice_Click(sender As System.Object, e As System.EventArgs) Handles cmdViewInvoice.Click
-
-        ViewInvoice.Show()
-        ViewInvoice.Focus()
-        ViewInvoice.BringToFront()
-
-    End Sub
-
-    Private Sub cmdOptions_Click(sender As System.Object, e As System.EventArgs) Handles cmdOptions.Click
-
-        Options.Show()
-        Options.Focus()
-        Options.BringToFront()
-
-    End Sub
 
 End Class

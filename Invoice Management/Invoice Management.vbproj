@@ -75,8 +75,20 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="MigraDoc.DocumentObjectModel">
+      <HintPath>PDFsharp-MigraDocFoundation-Assemblies-1_31\GDI+\MigraDoc.DocumentObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="MigraDoc.Rendering">
+      <HintPath>PDFsharp-MigraDocFoundation-Assemblies-1_31\GDI+\MigraDoc.Rendering.dll</HintPath>
+    </Reference>
+    <Reference Include="MigraDoc.RtfRendering">
+      <HintPath>PDFsharp-MigraDocFoundation-Assemblies-1_31\GDI+\MigraDoc.RtfRendering.dll</HintPath>
+    </Reference>
     <Reference Include="PdfSharp">
       <HintPath>PDFsharp-MigraDocFoundation-Assemblies-1_31\GDI+\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Charting">
+      <HintPath>PDFsharp-MigraDocFoundation-Assemblies-1_31\GDI+\PdfSharp.Charting.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -104,12 +116,19 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddCustomer.Designer.vb">
+      <DependentUpon>AddCustomer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="AddCustomer.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="CreateInvoice.Designer.vb">
       <DependentUpon>CreateInvoice.vb</DependentUpon>
     </Compile>
     <Compile Include="CreateInvoice.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Customer.vb" />
     <Compile Include="GlobalVar.vb" />
     <Compile Include="Invoice.vb" />
     <Compile Include="InvoiceItem.vb" />
@@ -148,6 +167,12 @@
     <Compile Include="PreviewInvoice.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ViewCustomer.Designer.vb">
+      <DependentUpon>ViewCustomer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ViewCustomer.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ViewInvoice.Designer.vb">
       <DependentUpon>ViewInvoice.vb</DependentUpon>
     </Compile>
@@ -173,6 +198,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PreviewInvoice.resx">
       <DependentUpon>PreviewInvoice.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewCustomer.resx">
+      <DependentUpon>ViewCustomer.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ViewInvoice.resx">
       <DependentUpon>ViewInvoice.vb</DependentUpon>
@@ -244,15 +272,6 @@
     <None Include="Resources\Zoom-out-icon1.png" />
   </ItemGroup>
   <ItemGroup>
-    <COMReference Include="Acrobat">
-      <Guid>{E64169B3-3592-47D2-816E-602C5C13F328}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>1</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
     <COMReference Include="AcroBrokerLib">
       <Guid>{41738EEA-442F-477F-92CF-2889BD6CD7E7}</Guid>
       <VersionMajor>1</VersionMajor>
@@ -308,6 +327,9 @@
       <ProductName>Windows Installer 4.5</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refreshIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

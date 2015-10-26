@@ -96,9 +96,7 @@ C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\bin\Debug
 C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\bin\Debug\Invoice Management.pdb
 C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\bin\Debug\Invoice Management.xml
 C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\bin\Debug\AxInterop.AcroPDFLib.dll
-C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\bin\Debug\Microsoft.VisualBasic.PowerPacks.Vs.dll
 C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\bin\Debug\PdfSharp.dll
-C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\bin\Debug\System.Data.SqlServerCe.dll
 C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\bin\Debug\Microsoft.VisualBasic.PowerPacks.Vs.xml
 C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\bin\Debug\de\PdfSharp.resources.dll
 C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\obj\x86\Debug\Invoice Management.vbprojResolveAssemblyReference.cache
@@ -109,3 +107,12 @@ C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\obj\x86\D
 C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\obj\x86\Debug\Invoice_Management.PreviewInvoice.resources
 C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\obj\x86\Debug\Invoice_Management.ViewInvoice.resources
 C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\obj\x86\Debug\Invoice Management.vbproj.GenerateResource.Cache
+C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\bin\Debug\MigraDoc.DocumentObjectModel.dll
+C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\bin\Debug\MigraDoc.Rendering.dll
+C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\bin\Debug\MigraDoc.RtfRendering.dll
+C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\bin\Debug\PdfSharp.Charting.dll
+C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\bin\Debug\de\MigraDoc.DocumentObjectModel.resources.dll
+C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\bin\Debug\de\MigraDoc.Rendering.resources.dll
+C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\bin\Debug\de\MigraDoc.RtfRendering.resources.dll
+C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\obj\x86\Debug\Interop.AcroBrokerLib.dll
+C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\obj\x86\Debug\Invoice_Management.ViewCustomer.resources
