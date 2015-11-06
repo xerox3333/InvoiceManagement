@@ -5,10 +5,10 @@
 Public Class InvoiceItem
 
     Private item As String
-    Private qty As Single
+    Private qty As String
     Private unit As String
-    Private unitPrice As String
-    Private Price As String
+    Private unitPrice As Single
+    Private Price As Single
 
     Public Sub New()
 
@@ -27,12 +27,12 @@ Public Class InvoiceItem
 
     End Property
 
-    Public Property pQty As Single
+    Public Property pQty As String
 
         Get
             Return qty
         End Get
-        Set(ByVal value As Single)
+        Set(ByVal value As String)
             qty = value
         End Set
 

@@ -6,11 +6,6 @@ Invoice Management
 </name>
 </assembly>
 <members>
-<member name="T:Invoice_Management.Invoice">
- <summary>
- This class represents an invoice
- </summary>
-</member>
 <member name="T:Invoice_Management.InvoiceItem">
  <summary>
  This class represents an invoice item

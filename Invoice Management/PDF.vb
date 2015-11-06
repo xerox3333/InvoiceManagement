@@ -1,5 +1,6 @@
 ﻿Imports PdfSharp.Drawing
 Imports PdfSharp.Pdf
+Imports System.IO
 
 Public Class PDF
 
@@ -50,9 +51,7 @@ Public Class PDF
         g.DrawRectangle(XBrushes.LightGray, New XRect(35, 155, 100, 80)) 'Customer Details background
         g.DrawString("Customer Info", detailFont, XBrushes.WhiteSmoke, New XRect(40, 165, 100, 0))
         g.DrawString(invoice.pBillTo, detailFont, XBrushes.Black, New XRect(140, 170, 100, 0))
-        'g.DrawString(invoice.pBillingAddress1, detailFont, XBrushes.Black, New XRect(140, 190, 100, 0))
-        'g.DrawString(invoice.pBillingCity, detailFont, XBrushes.Black, New XRect(140, 210, 100, 0))
-        'g.DrawString(invoice.pBillingPostcode, detailFont, XBrushes.Black, New XRect(140, 230, 100, 0))
+        'TODO: Split the address onto seperate lines
 
         g.DrawRectangle(XBrushes.LightGray, New XRect(275, 155, 100, 80)) 'Invoice Details background
         g.DrawString("Invoice Info ", detailFont, XBrushes.WhiteSmoke, New XRect(280, 165, 100, 0))
@@ -66,7 +65,7 @@ Public Class PDF
 
     End Sub
 
-    Public Sub drawTableHeader(ByVal num_rows As Integer, ByVal items() As InvoiceItem)
+    Public Sub drawTableHeader(ByVal num_rows As Integer, ByVal items As List(Of InvoiceItem))
 
         g.DrawString("Item", tableHeaderFont, XBrushes.CadetBlue, New XRect(25, 255, 50, 0))
         g.DrawString("Qty", tableHeaderFont, XBrushes.CadetBlue, New XRect(215, 255, 50, 0))
@@ -82,7 +81,7 @@ Public Class PDF
         g.DrawLine(pen, 400, yPos, 400, ((num_rows * 20) + yPos))
         g.DrawLine(pen, 500, yPos, 500, ((num_rows * 20) + yPos))
 
-        'Todo implement overflow page for table
+        'TODO: implement overflow page for table
         If num_rows > 20 Then
 
             num_rows = 20
@@ -101,13 +100,13 @@ Public Class PDF
         yPos = 265
 
         'Draw item names on table
-        For i As Integer = 0 To num_rows - 1
+        For Each _i In items
 
-            g.DrawString(items(i).pItem, detailFont, XBrushes.Black, New XRect(20, (yPos + 10), 100, 0))
-            g.DrawString(items(i).pQty, detailFont, XBrushes.Black, New XRect(210, (yPos + 10), 100, 0))
-            g.DrawString(items(i).pUnit, detailFont, XBrushes.Black, New XRect(310, (yPos + 10), 100, 0))
-            g.DrawString(Format(items(i).pUnitPrice, "Currency"), detailFont, XBrushes.Black, New XRect(410, (yPos + 10), 100, 0))
-            g.DrawString(Format(items(i).pPrice, "Currency"), detailFont, XBrushes.Black, New XRect(510, (yPos + 10), 100, 0))
+            g.DrawString(_i.pItem, detailFont, XBrushes.Black, New XRect(20, (yPos + 10), 100, 0))
+            g.DrawString(_i.pQty, detailFont, XBrushes.Black, New XRect(210, (yPos + 10), 100, 0))
+            g.DrawString(_i.pUnit, detailFont, XBrushes.Black, New XRect(310, (yPos + 10), 100, 0))
+            g.DrawString(Format(_i.pUnitPrice, "Currency"), detailFont, XBrushes.Black, New XRect(410, (yPos + 10), 100, 0))
+            g.DrawString(Format(_i.pPrice, "Currency"), detailFont, XBrushes.Black, New XRect(510, (yPos + 10), 100, 0))
             yPos += 20
 
         Next
@@ -115,6 +114,11 @@ Public Class PDF
     End Sub
 
     Public Sub SavePDF(ByVal location As String, ByVal fileName As String)
+
+        Dim fullPath As String = Path.Combine(location, fileName)
+
+        If Not System.IO.Directory.Exists(location) Then System.IO.Directory.CreateDirectory(location)
+        If Not System.IO.File.Exists(fullPath) Then System.IO.File.Create(fullPath).Dispose()
 
         pdf.Save(location & "\" & fileName)
 

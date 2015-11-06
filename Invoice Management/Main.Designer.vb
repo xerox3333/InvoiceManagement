@@ -195,7 +195,7 @@ Partial Class Main
         Me.ListBox1.Location = New System.Drawing.Point(0, 500)
         Me.ListBox1.Name = "ListBox1"
         Me.ListBox1.ScrollAlwaysVisible = True
-        Me.ListBox1.Size = New System.Drawing.Size(886, 93)
+        Me.ListBox1.Size = New System.Drawing.Size(889, 93)
         Me.ListBox1.TabIndex = 0
         Me.ListBox1.TabStop = False
         '
@@ -204,7 +204,7 @@ Partial Class Main
         Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label1.AutoSize = True
         Me.Label1.ForeColor = System.Drawing.SystemColors.ButtonShadow
-        Me.Label1.Location = New System.Drawing.Point(733, 564)
+        Me.Label1.Location = New System.Drawing.Point(736, 564)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(156, 13)
         Me.Label1.TabIndex = 0
@@ -233,26 +233,26 @@ Partial Class Main
         'NewToolStripMenuItem
         '
         Me.NewToolStripMenuItem.Name = "NewToolStripMenuItem"
-        Me.NewToolStripMenuItem.Size = New System.Drawing.Size(139, 22)
+        Me.NewToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.NewToolStripMenuItem.Text = "New Invoice"
         '
         'OpenExistingToolStripMenuItem
         '
         Me.OpenExistingToolStripMenuItem.Name = "OpenExistingToolStripMenuItem"
-        Me.OpenExistingToolStripMenuItem.Size = New System.Drawing.Size(139, 22)
+        Me.OpenExistingToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.OpenExistingToolStripMenuItem.Text = "Edit Invoice"
         '
         'SaveToolStripMenuItem
         '
         Me.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem"
-        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(139, 22)
+        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.SaveToolStripMenuItem.Text = "Save"
         '
         'ExportToolStripMenuItem
         '
         Me.ExportToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PDFToolStripMenuItem, Me.PNGToolStripMenuItem})
         Me.ExportToolStripMenuItem.Name = "ExportToolStripMenuItem"
-        Me.ExportToolStripMenuItem.Size = New System.Drawing.Size(139, 22)
+        Me.ExportToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.ExportToolStripMenuItem.Text = "Export"
         '
         'PDFToolStripMenuItem
@@ -270,18 +270,18 @@ Partial Class Main
         'PrintToolStripMenuItem
         '
         Me.PrintToolStripMenuItem.Name = "PrintToolStripMenuItem"
-        Me.PrintToolStripMenuItem.Size = New System.Drawing.Size(139, 22)
+        Me.PrintToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.PrintToolStripMenuItem.Text = "Print"
         '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(136, 6)
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(149, 6)
         '
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(139, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'EditToolStripMenuItem

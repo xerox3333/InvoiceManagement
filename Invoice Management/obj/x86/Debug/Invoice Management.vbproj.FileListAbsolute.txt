@@ -116,3 +116,5 @@ C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\bin\Debug
 C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\bin\Debug\de\MigraDoc.RtfRendering.resources.dll
 C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\obj\x86\Debug\Interop.AcroBrokerLib.dll
 C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\obj\x86\Debug\Invoice_Management.ViewCustomer.resources
+C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\bin\Debug\Microsoft.VisualBasic.PowerPacks.Vs.dll
+C:\Users\Craig\OneDrive\Invoice Management_01-02-15\Invoice Management\bin\Debug\System.Data.SqlServerCe.dll

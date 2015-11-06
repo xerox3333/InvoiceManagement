@@ -1,14 +1,16 @@
 ﻿Public Class GlobalVar
 
     Public Shared invoiceList As New List(Of Invoice)
+    'Public Shared estimateList As New List(Of Estimate)
 
     Public Shared invoicePath As String = ("C:\Users\" & getUserName() & "\Documents\InvoiceManager\Data")
+    Public Shared estimatePath As String = ("C:\Users" & getUserName() & "\Documents\InvoiceManager\Data\Estimates")
     Public Shared logPath As String = ("C:\Users\" & getUserName() & "\Documents\InvoiceManager\Log")
-    Public Shared previewFileLocation As String = ("C:\Users\" & getUserName() & "\Desktop")
+    Public Shared previewFileLocation As String = ("C:\Users\" & getUserName() & "\InvoiceManager")
     Public Shared previewFileName As String = ("preview.pdf")
     Public Shared no_options = 11
 
-    Public Shared oOwnerName As String = ""
+    Public Shared oOwnerName As String = "Full Names"
     Public Shared oCompanyName As String = "Company Name"
     Public Shared oCompanyAddress1 As String = "Company Address1"
     Public Shared oCompanyAddress2 As String = "Comany Address2"

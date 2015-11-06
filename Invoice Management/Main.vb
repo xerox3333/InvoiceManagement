@@ -9,7 +9,16 @@ Public Class Main
 
         SplitContainer1.Panel1MinSize = 192
 
-        CreateInvoice.initInvoices()
+        initInvoices()
+
+        If My.Settings.isFirstRun Then
+
+            Options.Show()
+            Options.BringToFront()
+
+            My.Settings.isFirstRun = False
+
+        End If
 
     End Sub
 
@@ -57,6 +66,24 @@ Public Class Main
 
     End Sub
 
+    Public Sub initInvoices()
+
+        If Not My.Computer.FileSystem.GetFiles(invoicePath) Is Nothing Then
+
+            For Each file As String In My.Computer.FileSystem.GetFiles(invoicePath)
+
+                invoiceList.Add(CreateInvoice.readInvoiceFromFile(invoicePath, file.ToString, invoiceList))
+
+            Next
+
+        Else
+
+            ListBox1.Items.Add("[info] No files found in invoice directory: " & invoicePath)
+
+        End If
+
+    End Sub
+
     Public Function getDockWidth(ByVal panel As System.Windows.Forms.SplitterPanel)
 
         Dim Width As Integer
@@ -85,17 +112,21 @@ Public Class Main
         Form.Left = 1
         Form.Top = 1
 
-        If (Width >= 1024 And Height >= 768) AndAlso (Width < 1280 And Height < 900) Then
-            Form.Width = getDockWidth(SplitContainer1.Panel2) - ((getDockWidth(SplitContainer1.Panel2) / 100) * 70)
+        If (Width >= 1024 And Height >= 600) AndAlso (Width < 1366 And Height < 768) Then
+            Form.Width = getDockWidth(SplitContainer1.Panel2) - ((getDockWidth(SplitContainer1.Panel2) / 100) * 40)
             Form.Height = getDockHeight(SplitContainer1.Panel2)
 
-        ElseIf (Width >= 1280 And Height >= 900) AndAlso (Width < 1920 And Height < 1080) Then
-            Form.Width = getDockWidth(SplitContainer1.Panel2) - ((getDockWidth(SplitContainer1.Panel2) / 100) * 50)
+        ElseIf (Width >= 1366 And Height >= 768) AndAlso (Width < 1500 And Height < 900)
+            Form.Width = getDockWidth(SplitContainer1.Panel2) - ((getDockWidth(SplitContainer1.Panel2) / 100) * 20)
+            Form.Height = getDockHeight(SplitContainer1.Panel2)
+
+        ElseIf (Width >= 1500 And Height >= 900) AndAlso (Width < 1920 And Height < 1080) Then
+            Form.Width = getDockWidth(SplitContainer1.Panel2) - ((getDockWidth(SplitContainer1.Panel2) / 100) * 10)
             Form.Height = getDockHeight(SplitContainer1.Panel2)
 
         ElseIf (Width >= 1920 And Height >= 1080) AndAlso (Width < 2560 And Height < 1440) Then
             'Size for standard 1080p HD resoluion
-            Form.Width = getDockWidth(SplitContainer1.Panel2) - ((getDockWidth(SplitContainer1.Panel2) / 100) * 15)
+            Form.Width = getDockWidth(SplitContainer1.Panel2) - ((getDockWidth(SplitContainer1.Panel2) / 100) * 5)
             Form.Height = getDockHeight(SplitContainer1.Panel2)
 
         ElseIf Width >= 2560 And Height >= 1440 Then
@@ -139,5 +170,14 @@ Public Class Main
 
     End Sub
 
+    Private Sub NewToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NewToolStripMenuItem.Click
+
+        If Application.OpenForms().OfType(Of CreateInvoice).Any Then
+
+
+
+        End If
+
+    End Sub
 
 End Class
